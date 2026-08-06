@@ -6,11 +6,11 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { categories, countByCategory, jobs } from "@/data/jobs";
 
-type JobSearch = { category?: string };
+type JobSearch = { category?: string | undefined };
 
-export const Route = createFileRoute("/jobs")({
+export const Route = createFileRoute("/jobs/")({
   validateSearch: (search: Record<string, unknown>): JobSearch => ({
-    category: typeof search.category === "string" ? search.category : undefined,
+    category: typeof search["category"] === "string" ? (search["category"] as string) : undefined,
   }),
   head: () => ({
     meta: [
