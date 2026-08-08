@@ -27,7 +27,7 @@ function PostJob() {
     title: "",
     category: categories[0]?.slug ?? "",
     location: "",
-    type: "Full-time",
+    job_type: "Full-time",
     stipend: "",
     qualification: "",
     summary: "",
@@ -60,7 +60,7 @@ function PostJob() {
           ))}
         </select>
         <input required className={inputClass} placeholder="Location" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} />
-        <select className={inputClass} value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+        <select className={inputClass} value={form.job_type} onChange={(e) => setForm({ ...form, job_type: e.target.value })}>
           {["Full-time", "Part-time", "Internship", "Contract", "Remote"].map((t) => (
             <option key={t} value={t}>{t}</option>
           ))}

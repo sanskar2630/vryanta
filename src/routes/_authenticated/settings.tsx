@@ -29,9 +29,9 @@ function SettingsPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  async function update(patch: Record<string, unknown>) {
+  async function update(patch: Record<string, boolean | string>) {
     if (!userId) return;
-    const { error } = await supabase.from("profiles").update(patch).eq("id", userId);
+    const { error } = await supabase.from("profiles").update(patch as never).eq("id", userId);
     if (error) {
       toast.error(error.message);
       return;

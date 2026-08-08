@@ -54,7 +54,7 @@ function EmployerJobs() {
             <li key={job.id} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-card p-5">
               <div>
                 <p className="font-semibold">{job.title}</p>
-                <p className="text-sm text-muted-foreground">{job.location} · {job.type} · {job.status}</p>
+                <p className="text-sm text-muted-foreground">{job.location} · {job.job_type} · {job.status}</p>
               </div>
               {job.status === "open" ? (
                 <button type="button" onClick={() => close(job.id)} className="text-sm font-semibold text-destructive hover:underline">
