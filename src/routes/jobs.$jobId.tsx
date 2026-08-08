@@ -13,10 +13,10 @@ export const Route = createFileRoute("/jobs/$jobId")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Vacancy unavailable — ScholarHire" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Vacancy unavailable — Vryanta" }, { name: "robots", content: "noindex" }] };
     }
     const { job } = loaderData;
-    const title = `${job.title} at ${job.company} — ScholarHire`;
+    const title = `${job.title} at ${job.company} — Vryanta`;
     return {
       meta: [
         { title },
@@ -73,7 +73,7 @@ function JobDetail() {
 
             <h2 className="mt-8 text-xl font-semibold">What you'll do</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {job.responsibilities.map((item) => (
+              {job.responsibilities.map((item: string) => (
                 <li key={item} className="flex gap-2">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
@@ -83,7 +83,7 @@ function JobDetail() {
 
             <h2 className="mt-8 text-xl font-semibold">Who can apply</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {job.requirements.map((item) => (
+              {job.requirements.map((item: string) => (
                 <li key={item} className="flex gap-2">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
                   {item}

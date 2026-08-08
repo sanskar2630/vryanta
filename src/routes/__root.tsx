@@ -78,13 +78,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ScholarHire — Jobs for Unemployed Students & Scholars" },
+      { title: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         name: "description",
         content:
           "Free job board matching unemployed students and scholars with faculty, research, IT, internship and government vacancies by category.",
       },
-      { property: "og:title", content: "ScholarHire — Jobs for Unemployed Students & Scholars" },
+      { property: "og:title", content: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         property: "og:description",
         content: "Browse vacancies by category and apply free. Employers post exactly what they need.",
@@ -98,7 +98,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

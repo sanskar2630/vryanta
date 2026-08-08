@@ -14,13 +14,13 @@ export const Route = createFileRoute("/jobs/")({
   }),
   head: () => ({
     meta: [
-      { title: "Browse Student & Scholar Vacancies — ScholarHire" },
+      { title: "Browse Student & Scholar Vacancies — Vryanta" },
       {
         name: "description",
         content:
           "Search open vacancies for students and scholars by category: teaching, research, IT, data, internships, administration, government and part-time work.",
       },
-      { property: "og:title", content: "Browse Student & Scholar Vacancies — ScholarHire" },
+      { property: "og:title", content: "Browse Student & Scholar Vacancies — Vryanta" },
       {
         name: "og:description",
         content: "Filter openings by category and apply free — no placement fee for students.",

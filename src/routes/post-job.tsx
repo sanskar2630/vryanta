@@ -8,13 +8,13 @@ import { categories } from "@/data/jobs";
 export const Route = createFileRoute("/post-job")({
   head: () => ({
     meta: [
-      { title: "Post a Vacancy for Students — ScholarHire" },
+      { title: "Post a Vacancy for Students — Vryanta" },
       {
         name: "description",
         content:
           "Employers and institutions: share your requirement and reach unemployed students and scholars looking for faculty, research, IT and internship roles.",
       },
-      { property: "og:title", content: "Post a Vacancy for Students — ScholarHire" },
+      { property: "og:title", content: "Post a Vacancy for Students — Vryanta" },
       {
         property: "og:description",
         content: "Describe the role you need filled and reach graduates actively looking for work.",
