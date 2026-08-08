@@ -1,12 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { categories } from "@/data/jobs";
+import logoAsset from "@/assets/vryanta-logo.png.asset.json";
 
 export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border/70 bg-secondary/50">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-12 sm:grid-cols-[1.4fr_1fr]">
         <div>
-          <p className="font-display text-base font-semibold">Vryanta</p>
+          <div className="flex items-center gap-2">
+            <img src={logoAsset.url} alt="Vryanta logo" className="size-8 rounded-md object-cover" />
+            <p className="font-display text-base font-semibold">Vryanta</p>
+          </div>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
             A free job board for unemployed students and scholars. Browse verified vacancies by category and apply
             directly — no subscription, no placement fee.
