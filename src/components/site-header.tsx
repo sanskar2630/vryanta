@@ -9,7 +9,7 @@ export function SiteHeader() {
           <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <GraduationCap className="size-5" />
           </span>
-          <span className="font-display text-lg font-semibold tracking-tight">ScholarHire</span>
+          <span className="font-display text-lg font-semibold tracking-tight">Vryanta</span>
         </Link>
         <nav className="flex items-center gap-1 text-sm font-medium">
           <Link

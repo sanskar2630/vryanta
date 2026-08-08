@@ -9,13 +9,13 @@ import { categories, countByCategory, jobs } from "@/data/jobs";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ScholarHire — Jobs for Unemployed Students & Scholars" },
+      { title: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         name: "description",
         content:
           "Free job board for unemployed students and scholars. Browse faculty, research, IT, internship and government vacancies by category and apply directly.",
       },
-      { property: "og:title", content: "ScholarHire — Jobs for Unemployed Students & Scholars" },
+      { property: "og:title", content: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         property: "og:description",
         content: "Browse verified vacancies by category — teaching, research, IT, internships and government posts.",
@@ -43,7 +43,7 @@ function Home() {
               Jobs for scholars who are still waiting for their first break
             </h1>
             <p className="mt-5 max-w-xl text-base text-navy-foreground/80">
-              ScholarHire lists faculty, research, IT, internship and government openings sorted by category.
+              Vryanta lists faculty, research, IT, internship and government openings sorted by category.
               Companies and institutions post what they need — students apply for free.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">

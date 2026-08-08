@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border/70 bg-secondary/50">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-12 sm:grid-cols-[1.4fr_1fr]">
         <div>
-          <p className="font-display text-base font-semibold">ScholarHire</p>
+          <p className="font-display text-base font-semibold">Vryanta</p>
           <p className="mt-2 max-w-sm text-sm text-muted-foreground">
             A free job board for unemployed students and scholars. Browse verified vacancies by category and apply
             directly — no subscription, no placement fee.
@@ -30,7 +30,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/70 px-5 py-5 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} ScholarHire. Built for scholars looking for their first opportunity.
+        © {new Date().getFullYear()} Vryanta. Built for scholars looking for their first opportunity.
       </div>
     </footer>
   );

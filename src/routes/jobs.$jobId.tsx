@@ -13,10 +13,10 @@ export const Route = createFileRoute("/jobs/$jobId")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Vacancy unavailable — ScholarHire" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Vacancy unavailable — Vryanta" }, { name: "robots", content: "noindex" }] };
     }
     const { job } = loaderData;
-    const title = `${job.title} at ${job.company} — ScholarHire`;
+    const title = `${job.title} at ${job.company} — Vryanta`;
     return {
       meta: [
         { title },
