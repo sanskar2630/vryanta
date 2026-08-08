@@ -83,7 +83,7 @@ function JobDetail() {
 
             <h2 className="mt-8 text-xl font-semibold">Who can apply</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {job.requirements.map((item) => (
+              {job.requirements.map((item: string) => (
                 <li key={item} className="flex gap-2">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
