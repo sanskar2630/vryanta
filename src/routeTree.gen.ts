@@ -10,18 +10,107 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as PostJobRouteImport } from './routes/post-job'
+import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
+import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedFindJobsRouteImport } from './routes/_authenticated/find-jobs'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedResumeRouteImport } from './routes/_authenticated/resume'
+import { Route as AuthenticatedSavedRouteImport } from './routes/_authenticated/saved'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthIndexRouteImport } from './routes/auth.index'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-password'
+import { Route as AuthLoginRouteImport } from './routes/auth.login'
+import { Route as AuthSignupRouteImport } from './routes/auth.signup'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as JobsJobIdRouteImport } from './routes/jobs.$jobId'
+import { Route as AuthenticatedEmployerIndexRouteImport } from './routes/_authenticated/employer.index'
+import { Route as AuthenticatedEmployerApplicantsRouteImport } from './routes/_authenticated/employer.applicants'
+import { Route as AuthenticatedEmployerCompanyRouteImport } from './routes/_authenticated/employer.company'
+import { Route as AuthenticatedEmployerJobsRouteImport } from './routes/_authenticated/employer.jobs'
+import { Route as AuthenticatedEmployerPostJobRouteImport } from './routes/_authenticated/employer.post-job'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostJobRoute = PostJobRouteImport.update({
   id: '/post-job',
   path: '/post-job',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAlertsRoute = AuthenticatedAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedApplicationsRoute =
+  AuthenticatedApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedFindJobsRoute = AuthenticatedFindJobsRouteImport.update({
+  id: '/find-jobs',
+  path: '/find-jobs',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedResumeRoute = AuthenticatedResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSavedRoute = AuthenticatedSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthIndexRoute = AuthIndexRouteImport.update({
+  id: '/auth/',
+  path: '/auth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/auth/forgot-password',
+  path: '/auth/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JobsIndexRoute = JobsIndexRouteImport.update({
@@ -34,38 +123,197 @@ const JobsJobIdRoute = JobsJobIdRouteImport.update({
   path: '/jobs/$jobId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedEmployerIndexRoute =
+  AuthenticatedEmployerIndexRouteImport.update({
+    id: '/employer/',
+    path: '/employer/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerApplicantsRoute =
+  AuthenticatedEmployerApplicantsRouteImport.update({
+    id: '/employer/applicants',
+    path: '/employer/applicants',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerCompanyRoute =
+  AuthenticatedEmployerCompanyRouteImport.update({
+    id: '/employer/company',
+    path: '/employer/company',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerJobsRoute =
+  AuthenticatedEmployerJobsRouteImport.update({
+    id: '/employer/jobs',
+    path: '/employer/jobs',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerPostJobRoute =
+  AuthenticatedEmployerPostJobRouteImport.update({
+    id: '/employer/post-job',
+    path: '/employer/post-job',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/post-job': typeof PostJobRoute
+  '/alerts': typeof AuthenticatedAlertsRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/find-jobs': typeof AuthenticatedFindJobsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/resume': typeof AuthenticatedResumeRoute
+  '/saved': typeof AuthenticatedSavedRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/jobs/': typeof JobsIndexRoute
+  '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
+  '/employer/company': typeof AuthenticatedEmployerCompanyRoute
+  '/employer/jobs': typeof AuthenticatedEmployerJobsRoute
+  '/employer/post-job': typeof AuthenticatedEmployerPostJobRoute
+  '/employer/': typeof AuthenticatedEmployerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/post-job': typeof PostJobRoute
+  '/alerts': typeof AuthenticatedAlertsRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/find-jobs': typeof AuthenticatedFindJobsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/resume': typeof AuthenticatedResumeRoute
+  '/saved': typeof AuthenticatedSavedRoute
+  '/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
+  '/auth': typeof AuthIndexRoute
   '/jobs': typeof JobsIndexRoute
+  '/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
+  '/employer/company': typeof AuthenticatedEmployerCompanyRoute
+  '/employer/jobs': typeof AuthenticatedEmployerJobsRoute
+  '/employer/post-job': typeof AuthenticatedEmployerPostJobRoute
+  '/employer': typeof AuthenticatedEmployerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/post-job': typeof PostJobRoute
+  '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
+  '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/find-jobs': typeof AuthenticatedFindJobsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/resume': typeof AuthenticatedResumeRoute
+  '/_authenticated/saved': typeof AuthenticatedSavedRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
   '/jobs/$jobId': typeof JobsJobIdRoute
+  '/auth/': typeof AuthIndexRoute
   '/jobs/': typeof JobsIndexRoute
+  '/_authenticated/employer/applicants': typeof AuthenticatedEmployerApplicantsRoute
+  '/_authenticated/employer/company': typeof AuthenticatedEmployerCompanyRoute
+  '/_authenticated/employer/jobs': typeof AuthenticatedEmployerJobsRoute
+  '/_authenticated/employer/post-job': typeof AuthenticatedEmployerPostJobRoute
+  '/_authenticated/employer/': typeof AuthenticatedEmployerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/post-job' | '/jobs/$jobId' | '/jobs/'
+  fullPaths:
+    | '/'
+    | '/post-job'
+    | '/alerts'
+    | '/applications'
+    | '/dashboard'
+    | '/find-jobs'
+    | '/profile'
+    | '/resume'
+    | '/saved'
+    | '/settings'
+    | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/jobs/$jobId'
+    | '/auth/'
+    | '/jobs/'
+    | '/employer/applicants'
+    | '/employer/company'
+    | '/employer/jobs'
+    | '/employer/post-job'
+    | '/employer/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/post-job' | '/jobs/$jobId' | '/jobs'
-  id: '__root__' | '/' | '/post-job' | '/jobs/$jobId' | '/jobs/'
+  to:
+    | '/'
+    | '/post-job'
+    | '/alerts'
+    | '/applications'
+    | '/dashboard'
+    | '/find-jobs'
+    | '/profile'
+    | '/resume'
+    | '/saved'
+    | '/settings'
+    | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/jobs/$jobId'
+    | '/auth'
+    | '/jobs'
+    | '/employer/applicants'
+    | '/employer/company'
+    | '/employer/jobs'
+    | '/employer/post-job'
+    | '/employer'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/post-job'
+    | '/_authenticated/alerts'
+    | '/_authenticated/applications'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/find-jobs'
+    | '/_authenticated/profile'
+    | '/_authenticated/resume'
+    | '/_authenticated/saved'
+    | '/_authenticated/settings'
+    | '/auth/callback'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/jobs/$jobId'
+    | '/auth/'
+    | '/jobs/'
+    | '/_authenticated/employer/applicants'
+    | '/_authenticated/employer/company'
+    | '/_authenticated/employer/jobs'
+    | '/_authenticated/employer/post-job'
+    | '/_authenticated/employer/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   PostJobRoute: typeof PostJobRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
   JobsJobIdRoute: typeof JobsJobIdRoute
+  AuthIndexRoute: typeof AuthIndexRoute
   JobsIndexRoute: typeof JobsIndexRoute
 }
 
@@ -78,11 +326,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post-job': {
       id: '/post-job'
       path: '/post-job'
       fullPath: '/post-job'
       preLoaderRoute: typeof PostJobRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/alerts': {
+      id: '/_authenticated/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AuthenticatedAlertsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/applications': {
+      id: '/_authenticated/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof AuthenticatedApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/find-jobs': {
+      id: '/_authenticated/find-jobs'
+      path: '/find-jobs'
+      fullPath: '/find-jobs'
+      preLoaderRoute: typeof AuthenticatedFindJobsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/resume': {
+      id: '/_authenticated/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof AuthenticatedResumeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/saved': {
+      id: '/_authenticated/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof AuthenticatedSavedRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/auth/': {
+      id: '/auth/'
+      path: '/auth'
+      fullPath: '/auth/'
+      preLoaderRoute: typeof AuthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/forgot-password': {
+      id: '/auth/forgot-password'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/jobs/': {
@@ -99,13 +445,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsJobIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/employer/': {
+      id: '/_authenticated/employer/'
+      path: '/employer'
+      fullPath: '/employer/'
+      preLoaderRoute: typeof AuthenticatedEmployerIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/applicants': {
+      id: '/_authenticated/employer/applicants'
+      path: '/employer/applicants'
+      fullPath: '/employer/applicants'
+      preLoaderRoute: typeof AuthenticatedEmployerApplicantsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/company': {
+      id: '/_authenticated/employer/company'
+      path: '/employer/company'
+      fullPath: '/employer/company'
+      preLoaderRoute: typeof AuthenticatedEmployerCompanyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/jobs': {
+      id: '/_authenticated/employer/jobs'
+      path: '/employer/jobs'
+      fullPath: '/employer/jobs'
+      preLoaderRoute: typeof AuthenticatedEmployerJobsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/post-job': {
+      id: '/_authenticated/employer/post-job'
+      path: '/employer/post-job'
+      fullPath: '/employer/post-job'
+      preLoaderRoute: typeof AuthenticatedEmployerPostJobRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAlertsRoute: typeof AuthenticatedAlertsRoute
+  AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedFindJobsRoute: typeof AuthenticatedFindJobsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedResumeRoute: typeof AuthenticatedResumeRoute
+  AuthenticatedSavedRoute: typeof AuthenticatedSavedRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedEmployerApplicantsRoute: typeof AuthenticatedEmployerApplicantsRoute
+  AuthenticatedEmployerCompanyRoute: typeof AuthenticatedEmployerCompanyRoute
+  AuthenticatedEmployerJobsRoute: typeof AuthenticatedEmployerJobsRoute
+  AuthenticatedEmployerPostJobRoute: typeof AuthenticatedEmployerPostJobRoute
+  AuthenticatedEmployerIndexRoute: typeof AuthenticatedEmployerIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAlertsRoute: AuthenticatedAlertsRoute,
+  AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedFindJobsRoute: AuthenticatedFindJobsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedResumeRoute: AuthenticatedResumeRoute,
+  AuthenticatedSavedRoute: AuthenticatedSavedRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedEmployerApplicantsRoute: AuthenticatedEmployerApplicantsRoute,
+  AuthenticatedEmployerCompanyRoute: AuthenticatedEmployerCompanyRoute,
+  AuthenticatedEmployerJobsRoute: AuthenticatedEmployerJobsRoute,
+  AuthenticatedEmployerPostJobRoute: AuthenticatedEmployerPostJobRoute,
+  AuthenticatedEmployerIndexRoute: AuthenticatedEmployerIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   PostJobRoute: PostJobRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
   JobsJobIdRoute: JobsJobIdRoute,
+  AuthIndexRoute: AuthIndexRoute,
   JobsIndexRoute: JobsIndexRoute,
 }
 export const routeTree = rootRouteImport
