@@ -13,12 +13,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Free job board for unemployed students and scholars. Browse faculty, research, IT, internship and government vacancies by category and apply directly.",
+          "Find jobs you're qualified for. Discover relevant opportunities based on your skills, qualifications, experience, and location.",
       },
       { property: "og:title", content: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         property: "og:description",
-        content: "Browse verified vacancies by category — teaching, research, IT, internships and government posts.",
+        content: "Find jobs you're qualified for. Discover relevant opportunities based on your skills, qualifications, experience, and location.",
       },
     ],
   }),

@@ -82,16 +82,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Free job board matching unemployed students and scholars with faculty, research, IT, internship and government vacancies by category.",
+          "Find jobs you're qualified for. Discover relevant opportunities based on your skills, qualifications, experience, and location.",
       },
       { property: "og:title", content: "Vryanta — Jobs for Unemployed Students & Scholars" },
       {
         property: "og:description",
-        content: "Browse vacancies by category and apply free. Employers post exactly what they need.",
+        content: "Find jobs you're qualified for. Discover relevant opportunities based on your skills, qualifications, experience, and location.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Vryanta — Jobs for Unemployed Students & Scholars" },
+      { name: "twitter:description", content: "Find jobs you're qualified for. Discover relevant opportunities based on your skills, qualifications, experience, and location." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5678048629f0cb7c5421d0aa84c1efd2/id-preview-d8e9e0e0--a8213315-991c-4c10-9f53-243e9558251e.lovable.app-1786186653226.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5678048629f0cb7c5421d0aa84c1efd2/id-preview-d8e9e0e0--a8213315-991c-4c10-9f53-243e9558251e.lovable.app-1786186653226.png" },
     ],
     links: [
       {
