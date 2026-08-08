@@ -73,7 +73,7 @@ function JobDetail() {
 
             <h2 className="mt-8 text-xl font-semibold">What you'll do</h2>
             <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-              {job.responsibilities.map((item) => (
+              {job.responsibilities.map((item: string) => (
                 <li key={item} className="flex gap-2">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
