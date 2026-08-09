@@ -3,6 +3,8 @@ import { ArrowLeft, Banknote, Clock, GraduationCap, MapPin } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ApplyForm } from "@/components/apply-form";
+import { DemoBadge, ReportJobDialog } from "@/components/prototype";
+
 import { getCategory, getJob, type Job } from "@/data/jobs";
 
 export const Route = createFileRoute("/jobs/$jobId")({
@@ -49,13 +51,20 @@ function JobDetail() {
 
         <div className="mt-6 grid gap-8 lg:grid-cols-[1.6fr_1fr]">
           <article>
-            <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
-              {category?.name ?? job.category}
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
+                {category?.name ?? job.category}
+              </span>
+              <DemoBadge />
+            </div>
             <h1 className="mt-4 text-3xl font-semibold sm:text-4xl">{job.title}</h1>
             <p className="mt-2 text-base font-medium text-muted-foreground">
               {job.company} · posted {job.posted}
             </p>
+            <div className="mt-4">
+              <ReportJobDialog jobTitle={job.title} company={job.company} />
+            </div>
+
 
             <dl className="mt-6 grid gap-4 rounded-xl border border-border bg-card p-5 sm:grid-cols-2">
               <Detail icon={<MapPin className="size-4 text-accent" />} label="Location" value={job.location} />
