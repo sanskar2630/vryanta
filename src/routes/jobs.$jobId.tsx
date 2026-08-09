@@ -3,6 +3,8 @@ import { ArrowLeft, Banknote, Clock, GraduationCap, MapPin } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ApplyForm } from "@/components/apply-form";
+import { DemoBadge, ReportJobDialog } from "@/components/prototype";
+
 import { getCategory, getJob, type Job } from "@/data/jobs";
 
 export const Route = createFileRoute("/jobs/$jobId")({
