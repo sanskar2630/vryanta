@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ForEmployersRouteImport } from './routes/for-employers'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
@@ -47,6 +48,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForEmployersRoute = ForEmployersRouteImport.update({
+  id: '/for-employers',
+  path: '/for-employers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -169,6 +175,7 @@ const AuthenticatedEmployerPostJobRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
   '/post-job': typeof PostJobRoute
   '/alerts': typeof AuthenticatedAlertsRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
   '/post-job': typeof PostJobRoute
   '/alerts': typeof AuthenticatedAlertsRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
   '/post-job': typeof PostJobRoute
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
@@ -251,6 +260,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/for-employers'
     | '/how-it-works'
     | '/post-job'
     | '/alerts'
@@ -277,6 +287,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/for-employers'
     | '/how-it-works'
     | '/post-job'
     | '/alerts'
@@ -304,6 +315,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/for-employers'
     | '/how-it-works'
     | '/post-job'
     | '/_authenticated/alerts'
@@ -332,6 +344,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  ForEmployersRoute: typeof ForEmployersRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PostJobRoute: typeof PostJobRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/for-employers': {
+      id: '/for-employers'
+      path: '/for-employers'
+      fullPath: '/for-employers'
+      preLoaderRoute: typeof ForEmployersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -562,6 +582,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  ForEmployersRoute: ForEmployersRoute,
   HowItWorksRoute: HowItWorksRoute,
   PostJobRoute: PostJobRoute,
   AuthCallbackRoute: AuthCallbackRoute,
