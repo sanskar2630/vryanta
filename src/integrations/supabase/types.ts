@@ -213,7 +213,9 @@ export type Database = {
           category: string
           company: string
           created_at: string
+          deadline: string | null
           employer_id: string
+          experience_level: string | null
           id: string
           job_type: string
           location: string
@@ -232,7 +234,9 @@ export type Database = {
           category: string
           company: string
           created_at?: string
+          deadline?: string | null
           employer_id: string
+          experience_level?: string | null
           id?: string
           job_type?: string
           location: string
@@ -251,7 +255,9 @@ export type Database = {
           category?: string
           company?: string
           created_at?: string
+          deadline?: string | null
           employer_id?: string
+          experience_level?: string | null
           id?: string
           job_type?: string
           location?: string
@@ -268,6 +274,39 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          is_read: boolean
+          kind: string
+          link: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          kind?: string
+          link?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          kind?: string
+          link?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           about: string | null
@@ -280,9 +319,11 @@ export type Database = {
           desired_titles: string[]
           email: string
           expected_salary: string | null
+          experience_level: string | null
           full_name: string
           headline: string | null
           id: string
+          interests: string[]
           is_fresher: boolean
           job_types: string[]
           languages: Json
@@ -290,6 +331,7 @@ export type Database = {
           notify_application_updates: boolean
           notify_employer_messages: boolean
           notify_job_alerts: boolean
+          onboarding_completed: boolean
           phone: string | null
           preferred_locations: string[]
           resume_url: string | null
@@ -309,9 +351,11 @@ export type Database = {
           desired_titles?: string[]
           email?: string
           expected_salary?: string | null
+          experience_level?: string | null
           full_name?: string
           headline?: string | null
           id: string
+          interests?: string[]
           is_fresher?: boolean
           job_types?: string[]
           languages?: Json
@@ -319,6 +363,7 @@ export type Database = {
           notify_application_updates?: boolean
           notify_employer_messages?: boolean
           notify_job_alerts?: boolean
+          onboarding_completed?: boolean
           phone?: string | null
           preferred_locations?: string[]
           resume_url?: string | null
@@ -338,9 +383,11 @@ export type Database = {
           desired_titles?: string[]
           email?: string
           expected_salary?: string | null
+          experience_level?: string | null
           full_name?: string
           headline?: string | null
           id?: string
+          interests?: string[]
           is_fresher?: boolean
           job_types?: string[]
           languages?: Json
@@ -348,6 +395,7 @@ export type Database = {
           notify_application_updates?: boolean
           notify_employer_messages?: boolean
           notify_job_alerts?: boolean
+          onboarding_completed?: boolean
           phone?: string | null
           preferred_locations?: string[]
           resume_url?: string | null

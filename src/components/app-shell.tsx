@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Bell,
   Bookmark,
@@ -18,7 +18,8 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { InitialsAvatar } from "@/components/initials-avatar";
-import { useProfile } from "@/hooks/use-vryanta";
+import { CursorGlow } from "@/components/interactive";
+import { useNotifications, useProfile } from "@/hooks/use-vryanta";
 import logoAsset from "@/assets/vryanta-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
@@ -44,6 +45,7 @@ const employerNav: NavItem[] = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { data: profile } = useProfile();
+  const { unread } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
@@ -53,6 +55,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav = isEmployer ? employerNav : seekerNav;
   const mobileNav = nav.filter((item) => item.mobile).slice(0, 5);
   const displayName = isEmployer ? profile?.company_name || profile?.full_name : profile?.full_name;
+
+  // First-run setup: send new job seekers through onboarding once.
+  const needsOnboarding = Boolean(profile) && !isEmployer && !profile?.onboarding_completed;
+  useEffect(() => {
+    if (needsOnboarding && pathname !== "/onboarding") navigate({ to: "/onboarding", replace: true });
+  }, [needsOnboarding, pathname, navigate]);
+
 
   async function handleSignOut() {
     await queryClient.cancelQueries();
@@ -66,6 +75,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background">
+      <CursorGlow />
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link to={isEmployer ? "/employer" : "/dashboard"} className="flex items-center gap-2">
@@ -88,7 +98,25 @@ export function AppShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="relative">
+          <div className="flex items-center gap-2">
+            <Link
+              to="/notifications"
+              aria-label={unread > 0 ? `Notifications, ${unread} unread` : "Notifications"}
+              className={cn(
+                "relative rounded-full border border-border p-2 transition-colors hover:bg-secondary",
+                isActive("/notifications") ? "bg-secondary text-foreground" : "text-muted-foreground",
+              )}
+            >
+              <Bell className="size-4" />
+              {unread > 0 ? (
+                <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground">
+                  {unread > 9 ? "9+" : unread}
+                </span>
+              ) : null}
+            </Link>
+
+            <div className="relative">
+
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
@@ -143,7 +171,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </>
             ) : null}
+            </div>
           </div>
+
         </div>
       </header>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import type { NotificationRow } from "@/lib/notifications";
 import {
   curatedUnifiedJobs,
   employerJobToUnified,
@@ -142,3 +143,25 @@ export function useJobAlerts() {
     },
   });
 }
+
+export function useNotifications() {
+  const { user } = useSession();
+  const userId = user?.id;
+  const query = useQuery({
+    queryKey: ["notifications", userId],
+    enabled: Boolean(userId),
+    queryFn: async (): Promise<NotificationRow[]> => {
+      const { data, error } = await supabase
+        .from("notifications")
+        .select("*")
+        .eq("user_id", userId!)
+        .order("created_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      return (data ?? []) as NotificationRow[];
+    },
+  });
+  const unread = (query.data ?? []).filter((row) => !row.is_read).length;
+  return { ...query, unread, userId };
+}
+
