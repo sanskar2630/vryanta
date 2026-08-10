@@ -119,10 +119,17 @@ function Dashboard() {
             <EmptyState
               title="No new recommendations yet"
               description="You've seen everything currently listed. Set up a job alert and we'll flag new matches here."
-              actionLabel="Create a job alert"
-              actionTo="/alerts"
+              action={
+                <Link
+                  to="/alerts"
+                  className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+                >
+                  Create a job alert
+                </Link>
+              }
             />
           </div>
+
         ) : (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {recommendations.map(({ job, match }, index) => (
