@@ -38,6 +38,9 @@ export type ProfileRow = {
   work_modes: string[];
   job_types: string[];
   is_fresher: boolean;
+  interests: string[];
+  experience_level: string | null;
+  onboarding_completed: boolean;
   resume_url: string | null;
   company_name: string | null;
   company_type: string | null;
@@ -120,13 +123,23 @@ export function employerJobToUnified(row: EmployerJobRow): UnifiedJob {
 
 const norm = (value: string) => value.toLowerCase().trim();
 
-/** Deterministic match score between a seeker profile and a job. */
-export function matchScore(
-  profile: Pick<ProfileRow, "skills" | "desired_titles" | "preferred_locations" | "work_modes" | "job_types" | "location" | "headline"> | null | undefined,
-  job: UnifiedJob,
-): number {
+export type ScoreProfile = Pick<
+  ProfileRow,
+  | "skills"
+  | "desired_titles"
+  | "preferred_locations"
+  | "work_modes"
+  | "job_types"
+  | "location"
+  | "headline"
+  | "interests"
+  | "experience_level"
+>;
+
+/** Deterministic, rule-based match score between a seeker profile and a job. */
+export function matchScore(profile: Partial<ScoreProfile> | null | undefined, job: UnifiedJob): number {
   if (!profile) return 60;
-  let score = 52;
+  let score = 50;
   const haystack = norm(`${job.title} ${job.summary} ${job.requirements.join(" ")} ${job.skills.join(" ")} ${job.qualification}`);
 
   const skills = (profile.skills ?? []).filter(Boolean);
@@ -144,6 +157,9 @@ export function matchScore(
   }
   if ((profile.job_types ?? []).some((type) => norm(type) === norm(job.type))) score += 7;
   if ((profile.work_modes ?? []).some((mode) => norm(mode) === norm(job.workMode))) score += 5;
+  if ((profile.interests ?? []).some((interest) => interest && (haystack.includes(norm(interest)) || norm(job.category).includes(norm(interest))))) {
+    score += 6;
+  }
   if (profile.headline && haystack.includes(norm(profile.headline.split("|")[0] ?? ""))) score += 4;
 
   return Math.max(48, Math.min(99, score));
@@ -175,6 +191,7 @@ export function profileCompletion(input: {
     },
     { label: "Certifications", done: input.certificationCount > 0, hint: "Courses or certificates you hold" },
     { label: "Languages", done: parseLanguages(p?.languages).length > 0, hint: "Languages you speak" },
+    { label: "Career interests", done: (p?.interests?.length ?? 0) > 0, hint: "Fields you want to work in" },
     {
       label: "Job preferences",
       done: (p?.desired_titles?.length ?? 0) > 0 && (p?.job_types?.length ?? 0) > 0,
