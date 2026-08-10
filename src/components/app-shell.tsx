@@ -45,6 +45,7 @@ const employerNav: NavItem[] = [
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { data: profile } = useProfile();
+  const { unread } = useNotifications();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
@@ -54,6 +55,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   const nav = isEmployer ? employerNav : seekerNav;
   const mobileNav = nav.filter((item) => item.mobile).slice(0, 5);
   const displayName = isEmployer ? profile?.company_name || profile?.full_name : profile?.full_name;
+
+  // First-run setup: send new job seekers through onboarding once.
+  const needsOnboarding = Boolean(profile) && !isEmployer && !profile?.onboarding_completed;
+  useEffect(() => {
+    if (needsOnboarding && pathname !== "/onboarding") navigate({ to: "/onboarding", replace: true });
+  }, [needsOnboarding, pathname, navigate]);
+
 
   async function handleSignOut() {
     await queryClient.cancelQueries();
