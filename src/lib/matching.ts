@@ -3,9 +3,10 @@
  *
  * This is a deterministic, rule-based scorer over the user's profile and a job.
  * It is intentionally isolated behind `matchDetails()` so a real recommendation
- * service can replace the implementation later without touching any UI code.
+ * service (or an AI API) can replace the implementation later without touching
+ * any UI code. Nothing here is AI — the UI must not claim otherwise.
  */
-import { matchScore, type ProfileRow, type UnifiedJob } from "@/lib/vryanta";
+import { matchScore, type ScoreProfile, type UnifiedJob } from "@/lib/vryanta";
 
 export type MatchDetails = {
   score: number;
@@ -15,16 +16,7 @@ export type MatchDetails = {
 
 const norm = (value: string) => value.toLowerCase().trim();
 
-export type MatchProfile = Pick<
-  ProfileRow,
-  | "skills"
-  | "desired_titles"
-  | "preferred_locations"
-  | "work_modes"
-  | "job_types"
-  | "location"
-  | "headline"
-> | null | undefined;
+export type MatchProfile = Partial<ScoreProfile> | null | undefined;
 
 export function matchDetails(profile: MatchProfile, job: UnifiedJob): MatchDetails {
   const score = matchScore(profile, job);
@@ -44,9 +36,7 @@ export function matchDetails(profile: MatchProfile, job: UnifiedJob): MatchDetai
 
   const skillHits = (profile.skills ?? []).filter((skill) => skill && haystack.includes(norm(skill)));
   if (skillHits.length > 0) {
-    reasons.push(
-      `Matches ${skillHits.length} of your listed skills (${skillHits.slice(0, 3).join(", ")}).`,
-    );
+    reasons.push(`Matches ${skillHits.length} of your listed skills (${skillHits.slice(0, 3).join(", ")}).`);
   }
 
   const titleHit = (profile.desired_titles ?? []).find(
@@ -67,6 +57,15 @@ export function matchDetails(profile: MatchProfile, job: UnifiedJob): MatchDetai
     reasons.push(`Work mode is ${job.workMode}, matching your preference.`);
   }
 
+  const interestHit = (profile.interests ?? []).find(
+    (interest) => interest && (haystack.includes(norm(interest)) || norm(job.category).includes(norm(interest))),
+  );
+  if (interestHit) reasons.push(`Overlaps a career interest you picked: ${interestHit}.`);
+
+  if (profile.experience_level && profile.experience_level === experienceBand(job)) {
+    reasons.push(`Suits your experience level (${profile.experience_level}).`);
+  }
+
   const summary =
     reasons.length > 0
       ? reasons[0]!
@@ -75,7 +74,7 @@ export function matchDetails(profile: MatchProfile, job: UnifiedJob): MatchDetai
   return { score, reasons, summary };
 }
 
-/** Rough experience band inferred from the listing — used only for filtering. */
+/** Rough experience band inferred from the listing — used for filtering and reasons. */
 export function experienceBand(job: Pick<UnifiedJob, "type" | "qualification" | "title">): string {
   const text = norm(`${job.qualification} ${job.title}`);
   if (job.type === "Internship" || text.includes("intern") || text.includes("trainee")) return "Student / Intern";
@@ -85,3 +84,19 @@ export function experienceBand(job: Pick<UnifiedJob, "type" | "qualification" | 
 }
 
 export const experienceBands = ["Student / Intern", "Fresher", "Experienced"] as const;
+
+export const interestOptions = [
+  "Teaching & academia",
+  "Research",
+  "Software & IT",
+  "Data & analytics",
+  "Finance & accounts",
+  "Design & content",
+  "Operations & admin",
+  "Government & public sector",
+  "Sales & marketing",
+  "Social impact & NGO",
+] as const;
+
+export const workModeOptions = ["On-site", "Hybrid", "Remote"] as const;
+export const jobTypeOptions = ["Full-time", "Part-time", "Internship", "Contract"] as const;
