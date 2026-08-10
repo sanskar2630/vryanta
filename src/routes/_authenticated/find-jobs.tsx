@@ -269,7 +269,7 @@ function FindJobs() {
                   disabled={appliedRefs.has(job.ref)}
                   onClick={() => apply(job, match.score)}
                   className="mt-auto w-full rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.01] disabled:opacity-50"
-                  style={{ marginTop: "1rem" }}
+                  
                 >
                   {appliedRefs.has(job.ref) ? "Applied" : "Apply now"}
                 </button>
