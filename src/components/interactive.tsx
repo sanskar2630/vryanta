@@ -1,44 +1,42 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
+import { usePremiumPointer } from "@/components/motion";
 
-function usePointerFine() {
-  const [fine, setFine] = useState(false);
-  useEffect(() => {
-    const query = window.matchMedia("(pointer: fine)");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setFine(query.matches && !reduced.matches);
-    update();
-    query.addEventListener("change", update);
-    reduced.addEventListener("change", update);
-    return () => {
-      query.removeEventListener("change", update);
-      reduced.removeEventListener("change", update);
-    };
-  }, []);
-  return fine;
-}
+export { Reveal, RevealGroup, CountUp, ScoreRing, ScoreBar, Magnetic, Tilt } from "@/components/motion";
+
+type CursorState = "default" | "link" | "button" | "card";
 
 /**
- * Subtle circular cursor follower. Desktop pointers only, disabled for
- * prefers-reduced-motion, and driven by a single rAF loop with transforms.
+ * Premium Vryanta cursor: inertial ring + precise dot, with hover states for
+ * links, buttons and cards (cards show a subtle "VIEW" label).
+ * Desktop hover pointers only; disabled for touch and prefers-reduced-motion.
  */
 export function CursorGlow() {
-  const enabled = usePointerFine();
+  const enabled = usePremiumPointer();
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const [state, setState] = useState<CursorState>("default");
+  const [pressed, setPressed] = useState(false);
+
+  useEffect(() => {
+    if (!enabled) return;
+    document.documentElement.classList.add("has-custom-cursor");
+    return () => document.documentElement.classList.remove("has-custom-cursor");
+  }, [enabled]);
 
   useEffect(() => {
     if (!enabled) return;
     const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const ring = { ...target };
     let frame = 0;
-    let interactive = false;
 
     const onMove = (event: PointerEvent) => {
       target.x = event.clientX;
       target.y = event.clientY;
       const el = event.target as HTMLElement | null;
-      interactive = Boolean(el?.closest("a,button,[role='button'],input,select,textarea"));
+      const card = el?.closest("[data-cursor='card']");
+      const button = el?.closest("button,[role='button'],[data-cursor='button'],input[type='submit']");
+      const link = el?.closest("a,[data-cursor='link']");
+      setState(card ? "card" : button ? "button" : link ? "link" : "default");
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${target.x}px, ${target.y}px, 0)`;
         dotRef.current.style.opacity = "1";
@@ -46,80 +44,106 @@ export function CursorGlow() {
     };
 
     const loop = () => {
-      ring.x += (target.x - ring.x) * 0.16;
-      ring.y += (target.y - ring.y) * 0.16;
+      ring.x += (target.x - ring.x) * 0.17;
+      ring.y += (target.y - ring.y) * 0.17;
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) scale(${interactive ? 1.6 : 1})`;
+        ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0)`;
         ringRef.current.style.opacity = "1";
       }
       frame = requestAnimationFrame(loop);
     };
 
+    const down = () => setPressed(true);
+    const up = () => setPressed(false);
+
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
     frame = requestAnimationFrame(loop);
     return () => {
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointerup", up);
       cancelAnimationFrame(frame);
     };
   }, [enabled]);
 
   if (!enabled) return null;
 
+  const size = state === "card" ? 64 : state === "button" ? 44 : state === "link" ? 34 : 26;
+  const scale = pressed ? 0.85 : 1;
+
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] hidden lg:block">
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-[120] hidden lg:block">
       <div
         ref={ringRef}
-        className="absolute -ml-4 -mt-4 size-8 rounded-full border border-accent/50 opacity-0 transition-opacity duration-300"
+        className="absolute left-0 top-0 opacity-0 transition-opacity duration-300"
+        style={{ transform: "translate3d(-100px,-100px,0)" }}
+      >
+        <div
+          className="grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-accent/60 bg-accent/8 backdrop-blur-[1px]"
+          style={{
+            width: size,
+            height: size,
+            transform: `translate(-50%, -50%) scale(${scale})`,
+            transition: "width 260ms cubic-bezier(0.22,1,0.36,1), height 260ms cubic-bezier(0.22,1,0.36,1), transform 140ms ease-out, background-color 200ms ease",
+            boxShadow: "0 0 18px -4px color-mix(in oklab, var(--accent) 55%, transparent)",
+          }}
+        >
+          <span
+            className="font-display text-[9px] font-bold uppercase tracking-widest text-accent"
+            style={{ opacity: state === "card" ? 1 : 0, transition: "opacity 180ms ease" }}
+          >
+            View
+          </span>
+        </div>
+      </div>
+      <div
+        ref={dotRef}
+        className="absolute left-0 top-0 -ml-[3px] -mt-[3px] size-1.5 rounded-full bg-accent opacity-0"
       />
-      <div ref={dotRef} className="absolute -ml-[3px] -mt-[3px] size-1.5 rounded-full bg-accent opacity-0" />
     </div>
   );
 }
 
-/** Fades content in the first time it scrolls into view. No-op with reduced motion. */
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
+/** Brief brand splash on first load. Never delays interaction artificially. */
+export function BootSplash() {
+  const [done, setDone] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(true);
+    if (typeof sessionStorage !== "undefined" && sessionStorage.getItem("vryanta:booted")) {
+      setDone(true);
+      setHidden(true);
       return;
     }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setShown(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -10% 0px" },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const showFor = reduced ? 0 : 620;
+    const t1 = setTimeout(() => setDone(true), showFor);
+    const t2 = setTimeout(() => {
+      setHidden(true);
+      sessionStorage.setItem("vryanta:booted", "1");
+    }, showFor + 420);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
+
+  if (hidden) return null;
 
   return (
     <div
-      ref={ref}
-      style={shown ? { transitionDelay: `${delay}ms` } : undefined}
-      className={cn(
-        "transition-all duration-500 ease-out motion-reduce:transition-none",
-        shown ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
-        className,
-      )}
+      aria-hidden
+      className="surface-navy pointer-events-none fixed inset-0 z-[200] grid place-items-center transition-opacity duration-400"
+      style={{ opacity: done ? 0 : 1 }}
     >
-      {children}
+      <div className="text-center">
+        <p className="font-display text-2xl font-bold tracking-[0.32em]">VRYANTA</p>
+        <div className="mx-auto mt-4 h-0.5 w-28 overflow-hidden rounded-full bg-navy-foreground/20">
+          <div className="h-full w-full origin-left bg-accent" style={{ animation: "boot-progress 700ms ease-out forwards" }} />
+        </div>
+      </div>
     </div>
   );
 }
