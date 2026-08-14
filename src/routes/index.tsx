@@ -114,7 +114,7 @@ function Home() {
 
             <Reveal delay={320}>
               <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-navy-foreground/15 pt-6">
-                <HeroStat value={countByCategory("teaching") + jobs.length} suffix="+" label="Sample openings" />
+                <HeroStat value={jobs.length} label="Sample openings" />
                 <HeroStat value={categories.length} label="Career categories" />
                 <HeroStat value={10} suffix=" fields" label="Profile signals used" />
               </dl>
