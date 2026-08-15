@@ -32,6 +32,11 @@ function ProfilePage() {
     skills: "",
     languages: "",
     about: "",
+    linkedin_url: "",
+    github_url: "",
+    portfolio_url: "",
+    education: "",
+    experience: "",
   });
 
   useEffect(() => {
@@ -45,6 +50,11 @@ function ProfilePage() {
       skills: (profile.skills ?? []).join(", "),
       languages: (Array.isArray(profile.languages) ? (profile.languages as string[]) : []).join(", "),
       about: profile.about ?? "",
+      linkedin_url: ((profile as Record<string, unknown>).linkedin_url as string) ?? "",
+      github_url: ((profile as Record<string, unknown>).github_url as string) ?? "",
+      portfolio_url: ((profile as Record<string, unknown>).portfolio_url as string) ?? "",
+      education: ((profile as Record<string, unknown>).education as string) ?? "",
+      experience: ((profile as Record<string, unknown>).experience as string) ?? "",
     });
   }, [profile]);
 
@@ -62,8 +72,14 @@ function ProfilePage() {
         skills: form.skills.split(",").map((s) => s.trim()).filter(Boolean),
         desired_titles: form.desired_titles.split(",").map((s) => s.trim()).filter(Boolean),
         languages: form.languages.split(",").map((s) => s.trim()).filter(Boolean),
-      })
+        linkedin_url: form.linkedin_url,
+        github_url: form.github_url,
+        portfolio_url: form.portfolio_url,
+        education: form.education,
+        experience: form.experience,
+      } as Record<string, unknown>)
       .eq("id", userId);
+
     if (error) {
       toast.error(error.message);
       return;
@@ -76,6 +92,9 @@ function ProfilePage() {
     <div className="space-y-6">
       <PageHeader title="Your profile" description="This information powers your match scores and digital resume." />
       <form onSubmit={save} className="grid gap-4 rounded-xl border border-border bg-card p-5 sm:grid-cols-2">
+        <div className="sm:col-span-2">
+          <h2 className="text-base font-semibold">Basic Details</h2>
+        </div>
         <Field label="Full name" value={form.full_name} onChange={(v) => setForm({ ...form, full_name: v })} />
         <Field label="Headline" value={form.headline} onChange={(v) => setForm({ ...form, headline: v })} />
         <Field label="Phone" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} />
@@ -83,18 +102,53 @@ function ProfilePage() {
         <Field label="Desired job titles (comma separated)" value={form.desired_titles} onChange={(v) => setForm({ ...form, desired_titles: v })} />
         <Field label="Skills (comma separated)" value={form.skills} onChange={(v) => setForm({ ...form, skills: v })} />
         <Field label="Languages (comma separated)" value={form.languages} onChange={(v) => setForm({ ...form, languages: v })} />
+        
         <label className="sm:col-span-2">
           <span className="text-sm font-medium">About you</span>
           <textarea
-            rows={4}
+            rows={3}
             value={form.about}
             onChange={(event) => setForm({ ...form, about: event.target.value })}
             className={`${inputClass} resize-y`}
           />
         </label>
-        <button type="submit" className="w-fit rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
-          Save profile
-        </button>
+
+        <div className="sm:col-span-2 border-t border-border pt-4 mt-2">
+          <h2 className="text-base font-semibold">Background & Experience</h2>
+        </div>
+        <label className="sm:col-span-2">
+          <span className="text-sm font-medium">Education & Qualifications</span>
+          <textarea
+            rows={2}
+            placeholder="e.g. Bachelor of Science in Computer Science, University (2020 - 2024)"
+            value={form.education}
+            onChange={(event) => setForm({ ...form, education: event.target.value })}
+            className={`${inputClass} resize-y`}
+          />
+        </label>
+        <label className="sm:col-span-2">
+          <span className="text-sm font-medium">Work Experience</span>
+          <textarea
+            rows={3}
+            placeholder="e.g. Frontend Developer at TechCorp (2024 - Present)"
+            value={form.experience}
+            onChange={(event) => setForm({ ...form, experience: event.target.value })}
+            className={`${inputClass} resize-y`}
+          />
+        </label>
+
+        <div className="sm:col-span-2 border-t border-border pt-4 mt-2">
+          <h2 className="text-base font-semibold">Professional Presence & Links</h2>
+        </div>
+        <Field label="LinkedIn Profile URL" value={form.linkedin_url} onChange={(v) => setForm({ ...form, linkedin_url: v })} />
+        <Field label="GitHub Profile URL" value={form.github_url} onChange={(v) => setForm({ ...form, github_url: v })} />
+        <Field label="Portfolio Website URL" value={form.portfolio_url} onChange={(v) => setForm({ ...form, portfolio_url: v })} />
+
+        <div className="sm:col-span-2 pt-2">
+          <button type="submit" className="w-fit rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90">
+            Save profile
+          </button>
+        </div>
       </form>
     </div>
   );
