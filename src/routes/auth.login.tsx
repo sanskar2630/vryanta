@@ -7,7 +7,7 @@ import { AuthShell, FieldLabel, inputClass, primaryButtonClass } from "@/compone
 import { GoogleButton } from "@/components/google-button";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/auth/signup")({
+export const Route = createFileRoute("/auth/login")({
   head: () => ({
     meta: [
       { title: "Create your Vryanta account" },
