@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Bookmark, Search, SlidersHorizontal, Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { Reveal } from "@/components/interactive";
+import { Reveal } from "@/components/motion";
 import { DemoBadge } from "@/components/prototype";
 import { supabase } from "@/integrations/supabase/client";
 import { useAllJobs, useApplications, useProfile, useSavedJobs } from "@/hooks/use-vryanta";

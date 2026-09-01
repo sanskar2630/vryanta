@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Bell, Bookmark, Briefcase, Sparkles } from "lucide-react";
 import { PageHeader } from "@/components/app-shell";
-import { Reveal } from "@/components/interactive";
+import { Reveal } from "@/components/motion";
 import { DemoBadge, EmptyState, PrototypeNote } from "@/components/prototype";
 import {
   useAllJobs,
