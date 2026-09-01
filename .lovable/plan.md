@@ -1,55 +1,49 @@
 # Vryanta Visual Redesign — Futuristic AI Career Platform
 
-A UI/UX-only transformation. No routes removed, no auth/database/logic changes.
+UI/UX only. No auth, Supabase, hooks (`use-vryanta.ts`), `src/lib/*`, or route removals. No new dependencies — all motion reuses the existing `motion.tsx` primitives (`Reveal`, `CountUp`, `ScoreRing`, `Magnetic`, `Tilt`). The existing `CursorGlow` stays as-is; no new cursor work.
 
-## 1. New design foundation (dark-first)
+Work happens in strict priority order, verifying each stage before the next.
 
-Today the app renders a light "Ocean Deep" theme (`src/styles.css`), with the dark token block present but never activated. The redesign makes the premium dark theme the default look of the product.
+## Priority 1 — Foundation, navigation, hero
 
-- Recolor tokens: near-black navy base, layered elevated surfaces, and a controlled accent trio — blue (primary), violet (secondary accent), cyan (highlight).
-- Ambient system: two or three reusable tokens for gradient borders, ambient glow, and glass panels so effects stay consistent instead of ad-hoc.
-- Background texture: one subtle grid + soft radial aurora treatment reused across page shells (extends existing `depth-field`).
-- Keep Sora/Manrope, tighten the type scale and spacing rhythm for a more premium hierarchy.
-- All existing shadcn/semantic tokens stay mapped, so every current page inherits the new look immediately.
+**Theme activation (`src/styles.css` only)**
+- Make the dark palette the default at `:root` (no toggle). Today the app renders light and the dark block is never activated.
+- Recolor: near-black navy base, layered elevated surfaces, three-color accent system — blue primary, violet secondary, cyan highlight.
+- Add a small set of reusable opt-in utilities: `gradient-border`, `ambient-glow`, `glass-panel` (refined), `btn-gradient`, `section-divider`, `text-gradient`.
+- Extend the existing `depth-field` with a subtle grid + soft radial aurora layer, reused globally instead of per page.
+- Tighten the Sora/Manrope type scale, letter-spacing and radius rhythm. Same fonts.
+- Because every page already routes through semantic tokens, this single change upgrades the whole app; verified with screenshots before touching other pages.
 
-## 2. Navigation
-
-Rebuild `site-header` presentation only (same links, same session logic):
+**Navigation (`site-header.tsx`, presentation only)**
 - Floating translucent bar that gains blur/border/shadow after scroll.
-- Underline-slide hover states, gradient-bordered primary CTA.
-- Mobile: full-height sheet-style panel with staggered link reveal.
+- Underline-slide hover states (`nav-link`), gradient-bordered primary CTA.
+- Mobile: sheet-style panel with staggered link reveal via `Reveal`.
 
-## 3. Homepage
+**Hero + AI Match Engine visual (`routes/index.tsx`, `match-visual.tsx`)**
+- Keep pointer-parallax `depth-field`; extend into a taller cinematic layout with gradient headline, supporting line, primary + ghost CTA.
+- Right side: Profile → Skills → AI Core → Opportunities, connected by animated flow lines, with floating opportunity cards and `ScoreRing` score indicators, layered for depth with ambient glow and subtle pointer response.
+- Transform/opacity animations only; `prefers-reduced-motion` respected.
 
-- **Hero**: keep the pointer-parallax depth field, upgrade to a taller cinematic layout — gradient headline, supporting line, primary + ghost CTA, and a refined right-side "match engine" visual (profile → skills → AI core → opportunities) with animated connective lines and floating opportunity cards.
-- **Trust strip**: compact stat row with count-up numbers, prototype/demo labelling preserved.
-- **Problem section**: asymmetric two-column with accent-bordered callouts.
-- **How it works**: convert the 4-step walkthrough into a vertical timeline with scroll-activated nodes.
-- **Why Vryanta**: bento grid (one large feature tile + smaller supporting tiles) replacing the uniform card row.
-- **Roadmap + CTA**: horizontal phase rail, then a glow-framed closing CTA with magnetic buttons.
-- Section transitions via gradient dividers rather than hard color breaks.
+## Priority 2 — Homepage sections (light touch)
 
-## 4. Dashboard and authenticated shell
+- Trust/stat strip: inherit new tokens and spacing, `CountUp` numbers, demo labelling unchanged.
+- "Why Vryanta": rebuilt as a bento grid (one large tile + smaller supporting tiles) — the only real structural change.
+- Problem, How it works, Roadmap: restyle with new tokens, spacing and `section-divider` transitions; structural extras only where the existing `Reveal`/stagger primitives already allow it.
+- Closing CTA: `gradient-border` + `ambient-glow` frame, `Magnetic` buttons.
 
-- `app-shell`: darker sidebar/topbar with active-route indicator, refined notification bell, better mobile drawer.
-- Dashboard: hero greeting row, profile-completion ring, animated stat tiles, match-insight cards with score rings, skills coverage bars, and an application progress timeline.
-- Empty states get illustrated, well-composed placeholders instead of bare text.
-- Any purely visual placeholder for future features is explicitly labelled as coming soon — no fake data or fake actions.
+## Priority 3 — Dashboard shell
 
-## 5. Remaining pages (visual pass, same content)
+- `app-shell.tsx`: darker topbar/nav surfaces, clear active-route indicator, refined notification bell, better mobile drawer.
+- Dashboard home: greeting row, `ScoreRing`-based profile-completion and match-insight cards, `CountUp` stat tiles.
+- Skills-coverage bars, application timelines and illustrated empty states are deferred — plain well-spaced placeholders for now.
 
-Jobs list/detail, find-jobs, applications, saved, alerts, profile, resume, settings, employer suite, auth screens, and marketing pages (`about`, `how-it-works`, `for-employers`, `contact`, legal) all move to the shared new card/panel/typography primitives so nothing looks left behind.
+## Priority 4 — Everything else
 
-## 6. Motion, responsiveness, performance
-
-- Reuse the existing `motion.tsx` primitives (`Reveal`, `CountUp`, `ScoreRing`, `Magnetic`, `Tilt`) — no new animation dependency.
-- CSS transform/opacity animations only; hover elevation, button press, gradient shimmer on key surfaces.
-- `prefers-reduced-motion` respected throughout; custom cursor stays desktop-only.
-- Grid-based header rows with `min-w-0`/`truncate`, verified at mobile, tablet, laptop, desktop widths.
+Jobs list/detail, find-jobs, applications, saved, alerts, profile, resume, settings, employer suite, auth screens, marketing/legal pages inherit the new look from the token and shared-component work. Individual files are touched only if something visibly breaks (contrast, spacing, truncation), fixed in isolation.
 
 ## Technical notes
 
-- Token work in `src/styles.css` (Tailwind v4 `@theme inline` + `@utility`); dark palette applied at `:root` so no theme toggle is required.
-- Component-level edits only in `src/components/*` and `src/routes/*` presentation markup; hooks in `src/hooks/use-vryanta.ts`, `src/lib/*`, and all Supabase integration files untouched.
-- No hardcoded color utilities — everything through semantic tokens.
-- Verified after implementation with a build check and Playwright screenshots at mobile and desktop widths.
+- Tokens/utilities live only in `src/styles.css` (Tailwind v4 `@theme inline` + `@utility`).
+- All other edits are presentation markup in `src/components/*` and `src/routes/*`.
+- No hardcoded color utilities — semantic tokens only. Standard `backdrop-filter` only, no hand-written vendor prefixes.
+- Verification: build check plus Playwright screenshots at mobile and desktop widths.
