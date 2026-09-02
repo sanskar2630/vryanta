@@ -20,6 +20,7 @@ import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAlertsRouteImport } from './routes/_authenticated/alerts'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
@@ -96,6 +97,11 @@ const ReportRoute = ReportRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -232,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/alerts': typeof AuthenticatedAlertsRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -267,6 +274,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/alerts': typeof AuthenticatedAlertsRoute
   '/applications': typeof AuthenticatedApplicationsRoute
@@ -304,6 +312,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
   '/_authenticated/alerts': typeof AuthenticatedAlertsRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/report'
     | '/reset-password'
+    | '/signup'
     | '/terms'
     | '/alerts'
     | '/applications'
@@ -376,6 +386,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/report'
     | '/reset-password'
+    | '/signup'
     | '/terms'
     | '/alerts'
     | '/applications'
@@ -412,6 +423,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/report'
     | '/reset-password'
+    | '/signup'
     | '/terms'
     | '/_authenticated/alerts'
     | '/_authenticated/applications'
@@ -449,6 +461,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ReportRoute: typeof ReportRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
@@ -536,6 +549,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -753,6 +773,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ReportRoute: ReportRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
