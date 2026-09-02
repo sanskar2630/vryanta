@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Mail } from "lucide-react";
@@ -7,6 +7,11 @@ import { AuthShell, FieldLabel, inputClass, primaryButtonClass } from "@/compone
 import { GoogleButton } from "@/components/google-button";
 
 export const Route = createFileRoute("/auth/login")({
+  ssr: false,
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getUser();
+    if (data.user?.email_confirmed_at) throw redirect({ to: "/dashboard" });
+  },
   head: () => ({
     meta: [
       { title: "Log in to Vryanta" },
