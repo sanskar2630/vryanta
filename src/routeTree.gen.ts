@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ForEmployersRouteImport } from './routes/for-employers'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PostJobRouteImport } from './routes/post-job'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReportRouteImport } from './routes/report'
@@ -70,6 +71,11 @@ const ForEmployersRoute = ForEmployersRouteImport.update({
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostJobRoute = PostJobRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/post-job': typeof PostJobRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/post-job': typeof PostJobRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
@@ -291,6 +299,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/for-employers': typeof ForEmployersRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
   '/post-job': typeof PostJobRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
@@ -327,6 +336,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-employers'
     | '/how-it-works'
+    | '/login'
     | '/post-job'
     | '/privacy'
     | '/report'
@@ -361,6 +371,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-employers'
     | '/how-it-works'
+    | '/login'
     | '/post-job'
     | '/privacy'
     | '/report'
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/for-employers'
     | '/how-it-works'
+    | '/login'
     | '/post-job'
     | '/privacy'
     | '/report'
@@ -432,6 +444,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ForEmployersRoute: typeof ForEmployersRoute
   HowItWorksRoute: typeof HowItWorksRoute
+  LoginRoute: typeof LoginRoute
   PostJobRoute: typeof PostJobRoute
   PrivacyRoute: typeof PrivacyRoute
   ReportRoute: typeof ReportRoute
@@ -488,6 +501,13 @@ declare module '@tanstack/react-router' {
       path: '/how-it-works'
       fullPath: '/how-it-works'
       preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/post-job': {
@@ -728,6 +748,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ForEmployersRoute: ForEmployersRoute,
   HowItWorksRoute: HowItWorksRoute,
+  LoginRoute: LoginRoute,
   PostJobRoute: PostJobRoute,
   PrivacyRoute: PrivacyRoute,
   ReportRoute: ReportRoute,
