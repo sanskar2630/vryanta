@@ -138,6 +138,7 @@ export type Database = {
           company: string
           created_at: string
           description: string | null
+          employment_type: string | null
           end_date: string | null
           id: string
           is_current: boolean
@@ -150,6 +151,7 @@ export type Database = {
           company: string
           created_at?: string
           description?: string | null
+          employment_type?: string | null
           end_date?: string | null
           id?: string
           is_current?: boolean
@@ -162,6 +164,7 @@ export type Database = {
           company?: string
           created_at?: string
           description?: string | null
+          employment_type?: string | null
           end_date?: string | null
           id?: string
           is_current?: boolean
@@ -321,21 +324,25 @@ export type Database = {
           expected_salary: string | null
           experience_level: string | null
           full_name: string
+          github_url: string | null
           headline: string | null
           id: string
           interests: string[]
           is_fresher: boolean
           job_types: string[]
           languages: Json
+          linkedin_url: string | null
           location: string | null
           notify_application_updates: boolean
           notify_employer_messages: boolean
           notify_job_alerts: boolean
           onboarding_completed: boolean
           phone: string | null
+          portfolio_url: string | null
           preferred_locations: string[]
           resume_url: string | null
           skills: string[]
+          soft_skills: string[]
           updated_at: string
           visibility: string
           work_modes: string[]
@@ -353,21 +360,25 @@ export type Database = {
           expected_salary?: string | null
           experience_level?: string | null
           full_name?: string
+          github_url?: string | null
           headline?: string | null
           id: string
           interests?: string[]
           is_fresher?: boolean
           job_types?: string[]
           languages?: Json
+          linkedin_url?: string | null
           location?: string | null
           notify_application_updates?: boolean
           notify_employer_messages?: boolean
           notify_job_alerts?: boolean
           onboarding_completed?: boolean
           phone?: string | null
+          portfolio_url?: string | null
           preferred_locations?: string[]
           resume_url?: string | null
           skills?: string[]
+          soft_skills?: string[]
           updated_at?: string
           visibility?: string
           work_modes?: string[]
@@ -385,24 +396,97 @@ export type Database = {
           expected_salary?: string | null
           experience_level?: string | null
           full_name?: string
+          github_url?: string | null
           headline?: string | null
           id?: string
           interests?: string[]
           is_fresher?: boolean
           job_types?: string[]
           languages?: Json
+          linkedin_url?: string | null
           location?: string | null
           notify_application_updates?: boolean
           notify_employer_messages?: boolean
           notify_job_alerts?: boolean
           onboarding_completed?: boolean
           phone?: string | null
+          portfolio_url?: string | null
           preferred_locations?: string[]
           resume_url?: string | null
           skills?: string[]
+          soft_skills?: string[]
           updated_at?: string
           visibility?: string
           work_modes?: string[]
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          project_url: string | null
+          repo_url: string | null
+          technologies: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          project_url?: string | null
+          repo_url?: string | null
+          technologies?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          project_url?: string | null
+          repo_url?: string | null
+          technologies?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      resumes: {
+        Row: {
+          created_at: string
+          id: string
+          overrides: Json
+          settings: Json
+          summary: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          overrides?: Json
+          settings?: Json
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          overrides?: Json
+          settings?: Json
+          summary?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

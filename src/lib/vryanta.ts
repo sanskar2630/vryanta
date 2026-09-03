@@ -45,6 +45,10 @@ export type ProfileRow = {
   company_name: string | null;
   company_type: string | null;
   company_website: string | null;
+  linkedin_url: string | null;
+  github_url: string | null;
+  portfolio_url: string | null;
+  soft_skills: string[];
   notify_job_alerts: boolean;
   notify_application_updates: boolean;
   notify_employer_messages: boolean;
@@ -165,42 +169,105 @@ export function matchScore(profile: Partial<ScoreProfile> | null | undefined, jo
   return Math.max(48, Math.min(99, score));
 }
 
-export type CompletionItem = { label: string; done: boolean; hint: string };
+export type CompletionItem = { label: string; done: boolean; hint: string; weight: number; to: string };
 
+/**
+ * Weighted profile completion. Sections that drive job matching (education, skills,
+ * experience, preferences) count for more than optional extras like links.
+ */
 export function profileCompletion(input: {
   profile: ProfileRow | null | undefined;
   educationCount: number;
   experienceCount: number;
   certificationCount: number;
-}): { percent: number; items: CompletionItem[] } {
+  projectCount?: number;
+}): { percent: number; items: CompletionItem[]; suggestions: CompletionItem[] } {
   const p = input.profile;
   const items: CompletionItem[] = [
     {
       label: "Basic information",
       done: Boolean(p?.full_name && p?.location && p?.phone),
       hint: "Name, location and phone number",
+      weight: 14,
+      to: "/profile",
     },
-    { label: "Professional headline", done: Boolean(p?.headline), hint: "e.g. Customer Support Executive | Fresher" },
-    { label: "About summary", done: Boolean(p?.about && p.about.length > 30), hint: "A short professional summary" },
-    { label: "Education", done: input.educationCount > 0, hint: "Add at least one qualification" },
-    { label: "Skills", done: (p?.skills?.length ?? 0) >= 3, hint: "Add at least 3 skills" },
+    {
+      label: "Professional headline",
+      done: Boolean(p?.headline),
+      hint: "e.g. Customer Support Executive | Fresher",
+      weight: 8,
+      to: "/profile",
+    },
+    {
+      label: "About summary",
+      done: Boolean(p?.about && p.about.length > 30),
+      hint: "A short professional summary",
+      weight: 10,
+      to: "/profile",
+    },
+    {
+      label: "Education",
+      done: input.educationCount > 0,
+      hint: "Complete your education details",
+      weight: 14,
+      to: "/profile",
+    },
+    {
+      label: "Skills",
+      done: (p?.skills?.length ?? 0) >= 3,
+      hint: "Add at least 3 technical skills",
+      weight: 14,
+      to: "/profile",
+    },
     {
       label: "Work experience",
       done: input.experienceCount > 0 || Boolean(p?.is_fresher),
       hint: "Add a role, or mark yourself as a fresher",
+      weight: 10,
+      to: "/profile",
     },
-    { label: "Certifications", done: input.certificationCount > 0, hint: "Courses or certificates you hold" },
-    { label: "Languages", done: parseLanguages(p?.languages).length > 0, hint: "Languages you speak" },
-    { label: "Career interests", done: (p?.interests?.length ?? 0) > 0, hint: "Fields you want to work in" },
     {
-      label: "Job preferences",
+      label: "Projects",
+      done: (input.projectCount ?? 0) > 0,
+      hint: "Add your projects to improve your profile",
+      weight: 9,
+      to: "/profile",
+    },
+    {
+      label: "Certifications & achievements",
+      done: input.certificationCount > 0,
+      hint: "Courses, certificates or awards you hold",
+      weight: 5,
+      to: "/profile",
+    },
+    {
+      label: "Career preferences",
       done: (p?.desired_titles?.length ?? 0) > 0 && (p?.job_types?.length ?? 0) > 0,
-      hint: "Desired roles and job types",
+      hint: "Desired roles, job type and work mode",
+      weight: 9,
+      to: "/profile",
+    },
+    {
+      label: "Professional links",
+      done: Boolean(p?.linkedin_url || p?.github_url || p?.portfolio_url),
+      hint: "Add your LinkedIn, GitHub or portfolio",
+      weight: 4,
+      to: "/profile",
+    },
+    {
+      label: "Languages",
+      done: parseLanguages(p?.languages).length > 0,
+      hint: "Languages you speak",
+      weight: 3,
+      to: "/profile",
     },
   ];
-  const done = items.filter((item) => item.done).length;
-  return { percent: Math.round((done / items.length) * 100), items };
+  const total = items.reduce((sum, item) => sum + item.weight, 0);
+  const earned = items.filter((item) => item.done).reduce((sum, item) => sum + item.weight, 0);
+  const suggestions = items.filter((item) => !item.done).sort((a, b) => b.weight - a.weight);
+  return { percent: Math.round((earned / total) * 100), items, suggestions };
 }
+
 
 export function initialsOf(name: string | null | undefined, fallback = "V") {
   const clean = (name ?? "").trim();

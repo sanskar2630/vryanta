@@ -57,22 +57,44 @@ export function useResumeSections() {
     queryKey: ["resume-sections", userId],
     enabled: Boolean(userId),
     queryFn: async () => {
-      const [education, experience, certifications] = await Promise.all([
+      const [education, experience, certifications, projects] = await Promise.all([
         supabase.from("education").select("*").eq("user_id", userId!).order("created_at", { ascending: false }),
         supabase.from("experience").select("*").eq("user_id", userId!).order("created_at", { ascending: false }),
         supabase.from("certifications").select("*").eq("user_id", userId!).order("created_at", { ascending: false }),
+        supabase.from("projects").select("*").eq("user_id", userId!).order("created_at", { ascending: false }),
       ]);
       if (education.error) throw education.error;
       if (experience.error) throw experience.error;
       if (certifications.error) throw certifications.error;
+      if (projects.error) throw projects.error;
       return {
         education: education.data ?? [],
         experience: experience.data ?? [],
         certifications: certifications.data ?? [],
+        projects: projects.data ?? [],
       };
     },
   });
 }
+
+/** The single resume record for the signed-in user (created lazily by the resume builder). */
+export function useResume() {
+  const { user } = useSession();
+  const userId = user?.id;
+
+  const query = useQuery({
+    queryKey: ["resume", userId],
+    enabled: Boolean(userId),
+    queryFn: async () => {
+      const { data, error } = await supabase.from("resumes").select("*").eq("user_id", userId!).maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  return { ...query, userId };
+}
+
 
 export function useAllJobs() {
   return useQuery({
