@@ -45,6 +45,10 @@ export type ProfileRow = {
   company_name: string | null;
   company_type: string | null;
   company_website: string | null;
+  linkedin_url: string | null;
+  github_url: string | null;
+  portfolio_url: string | null;
+  soft_skills: string[];
   notify_job_alerts: boolean;
   notify_application_updates: boolean;
   notify_employer_messages: boolean;
