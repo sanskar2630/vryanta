@@ -15,11 +15,11 @@ import { cn } from "@/lib/utils";
  * the whole product shares one motion language.
  * ------------------------------------------------------------------ */
 export const motionConfig = {
-  fast: 180,
-  base: 320,
-  slow: 620,
-  stagger: 70,
-  ease: "cubic-bezier(0.22, 1, 0.36, 1)",
+  fast: 200,
+  base: 240,
+  slow: 520,
+  stagger: 80,
+  ease: "cubic-bezier(0.16, 1, 0.3, 1)",
 } as const;
 
 /** True when the visitor has not asked for reduced motion. */
@@ -85,7 +85,7 @@ export function useInView<T extends HTMLElement>(options?: { rootMargin?: string
 type RevealVariant = "up" | "down" | "left" | "right" | "scale" | "fade";
 
 const offsets: Record<RevealVariant, string> = {
-  up: "translate3d(0,18px,0)",
+  up: "translate3d(0,24px,0)",
   down: "translate3d(0,-18px,0)",
   left: "translate3d(22px,0,0)",
   right: "translate3d(-22px,0,0)",
@@ -421,5 +421,66 @@ export function MagneticButton({
         {children}
       </button>
     </Magnetic>
+  );
+}
+
+/**
+ * Media wrapper: fades + scales gently (1.0 -> 1.03) when scrolled into view
+ * and drifts with a soft parallax offset. transform/opacity only.
+ */
+export function ParallaxMedia({
+  children,
+  className,
+  distance = 14,
+}: {
+  children: ReactNode;
+  className?: string;
+  distance?: number;
+}) {
+  const { ref, inView } = useInView<HTMLDivElement>({ once: false });
+  const allowed = useMotionAllowed();
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    if (!allowed || !inView) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const node = ref.current;
+      if (!node) return;
+      const rect = node.getBoundingClientRect();
+      const progress = (rect.top + rect.height / 2) / window.innerHeight - 0.5;
+      setOffset(Math.max(-1, Math.min(1, progress)) * distance);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [allowed, inView, distance, ref]);
+
+  return (
+    <div
+      ref={ref}
+      data-inview={allowed ? String(inView) : undefined}
+      className={cn("media-fluid", className)}
+      style={
+        allowed
+          ? {
+              transform: `translate3d(0, ${offset}px, 0)`,
+              transition: `transform 120ms linear`,
+              willChange: "transform",
+            }
+          : undefined
+      }
+    >
+      {children}
+    </div>
   );
 }

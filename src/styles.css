@@ -61,7 +61,22 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Motion language — one easing curve, three speeds. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+:root {
+  /* Fluid motion tokens (transform/opacity only for phone-safe motion) */
+  --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-fast: 200ms;
+  --motion-base: 240ms;
+  --motion-slow: 300ms;
+  --motion-reveal: 520ms;
+  --motion-stagger: 80ms;
+}
+
 
 :root {
   --radius: 0.9rem;
@@ -126,6 +141,40 @@
     border-color: var(--color-border);
   }
 
+  /* Global fluid baseline: nothing snaps between states. */
+  a,
+  button,
+  summary,
+  label,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"] {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity,
+      box-shadow, transform, filter;
+    transition-duration: var(--motion-base);
+    transition-timing-function: var(--motion-ease);
+  }
+
+  img,
+  video {
+    transition:
+      transform 900ms var(--motion-ease),
+      opacity var(--motion-reveal) var(--motion-ease);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+
+
   html {
     color-scheme: dark;
   }
@@ -169,16 +218,94 @@
 @utility card-lift {
   box-shadow: var(--shadow-card);
   transition:
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 220ms ease,
-    border-color 220ms ease;
+    transform var(--motion-slow) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    border-color var(--motion-slow) var(--motion-ease);
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: var(--shadow-lift);
     border-color: color-mix(in oklab, var(--primary) 45%, transparent);
   }
+
+  &:active {
+    transform: translate3d(0, -1px, 0);
+  }
 }
+
+/* Universal fluid hover: colors, borders, shadows, transforms. */
+@utility fluid {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter;
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--motion-ease);
+}
+
+/* Soft lift on hover, soft press on click — never a bounce. */
+@utility lift-press {
+  transition:
+    transform var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease),
+    filter var(--motion-base) var(--motion-ease);
+  will-change: transform;
+
+  &:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: var(--shadow-lift);
+  }
+
+  &:active {
+    transform: translate3d(0, 1px, 0) scale(0.985);
+    box-shadow: none;
+  }
+}
+
+/* Image/media wrapper: gentle zoom-in as it enters view, parallax-friendly. */
+@utility media-fluid {
+  overflow: hidden;
+
+  & > img,
+  & > video {
+    transform: scale(1);
+    transition:
+      transform 900ms var(--motion-ease),
+      opacity var(--motion-reveal) var(--motion-ease);
+    will-change: transform;
+  }
+
+  &:hover > img,
+  &:hover > video {
+    transform: scale(1.03);
+  }
+
+  &[data-inview="false"] > img,
+  &[data-inview="false"] > video {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  &[data-inview="true"] > img,
+  &[data-inview="true"] > video {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-fluid > img,
+  .media-fluid > video,
+  .lift-press,
+  .card-lift {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+
 
 /* ---------------------------------------------------------------- *
  * Reusable premium surface primitives (opt-in classes)
@@ -234,9 +361,9 @@
   color: var(--color-primary-foreground);
   box-shadow: 0 18px 44px -24px color-mix(in oklab, var(--primary) 90%, transparent);
   transition:
-    transform 160ms ease,
-    box-shadow 240ms ease,
-    filter 240ms ease;
+    transform var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    filter var(--motion-slow) var(--motion-ease);
 
   &:hover {
     filter: brightness(1.06);
@@ -339,7 +466,7 @@
     border-radius: inherit;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 240ms ease;
+    transition: opacity var(--motion-slow) var(--motion-ease);
     background: radial-gradient(
       520px circle at var(--spot-x) var(--spot-y),
       color-mix(in oklab, var(--primary) 18%, transparent),
@@ -354,12 +481,16 @@
 
 @utility btn-press {
   transition:
-    transform 140ms ease,
-    box-shadow 220ms ease,
-    opacity 200ms ease;
+    transform var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease);
+
+  &:hover {
+    transform: translate3d(0, -2px, 0);
+  }
 
   &:active {
-    transform: scale(0.97);
+    transform: translate3d(0, 1px, 0) scale(0.985);
   }
 }
 
@@ -378,7 +509,7 @@
     background-image: var(--gradient-accent);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform var(--motion-slow) var(--motion-ease);
   }
 
   &:hover::after,

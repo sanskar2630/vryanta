@@ -40,7 +40,7 @@ function NotificationsPage() {
             <button
               type="button"
               onClick={markAllRead}
-              className="inline-flex items-center gap-2 rounded-lg border border-input px-4 py-2 text-sm font-semibold transition-colors hover:bg-secondary"
+              className="inline-flex items-center gap-2 rounded-lg border border-input px-4 py-2 text-sm font-semibold fluid hover:bg-secondary"
             >
               <Check className="size-4" /> Mark all as read
             </button>
@@ -61,7 +61,7 @@ function NotificationsPage() {
             <li
               key={row.id}
               className={cn(
-                "rounded-xl border bg-card p-5 transition-colors",
+                "rounded-xl border bg-card p-5 fluid",
                 row.is_read ? "border-border" : "border-accent/50",
               )}
             >

@@ -77,7 +77,7 @@ export function CursorGlow() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-[120] hidden lg:block">
       <div
         ref={ringRef}
-        className="absolute left-0 top-0 opacity-0 transition-opacity duration-300"
+        className="absolute left-0 top-0 opacity-0 fluid duration-300"
         style={{ transform: "translate3d(-100px,-100px,0)" }}
       >
         <div
@@ -135,7 +135,7 @@ export function BootSplash() {
   return (
     <div
       aria-hidden
-      className="surface-navy pointer-events-none fixed inset-0 z-[200] grid place-items-center transition-opacity duration-400"
+      className="surface-navy pointer-events-none fixed inset-0 z-[200] grid place-items-center fluid duration-400"
       style={{ opacity: done ? 0 : 1 }}
     >
       <div className="text-center">

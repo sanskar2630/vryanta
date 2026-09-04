@@ -95,7 +95,7 @@ function PostJob() {
             </div>
             <button
               type="submit"
-              className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:col-span-2 sm:w-fit"
+              className="rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground fluid hover:opacity-90 sm:col-span-2 sm:w-fit"
             >
               Submit vacancy
             </button>

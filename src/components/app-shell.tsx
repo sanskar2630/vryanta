@@ -89,7 +89,7 @@ export function AppShell({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "rounded-md px-3 py-2 text-sm font-medium fluid",
                   isActive(item.to) ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground",
                 )}
               >
@@ -103,7 +103,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               to="/notifications"
               aria-label={unread > 0 ? `Notifications, ${unread} unread` : "Notifications"}
               className={cn(
-                "relative rounded-full border border-border p-2 transition-colors hover:bg-secondary",
+                "relative rounded-full border border-border p-2 fluid hover:bg-secondary",
                 isActive("/notifications") ? "bg-secondary text-foreground" : "text-muted-foreground",
               )}
             >
@@ -120,7 +120,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="flex items-center gap-2 rounded-full border border-border py-1 pl-1 pr-3 transition-colors hover:bg-secondary"
+              className="flex items-center gap-2 rounded-full border border-border py-1 pl-1 pr-3 fluid hover:bg-secondary"
               aria-haspopup="menu"
               aria-expanded={menuOpen}
             >

@@ -100,7 +100,7 @@ export function ReportJobDialog({ jobTitle, company }: { jobTitle: string; compa
       <DialogTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-destructive"
+          className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground fluid hover:text-destructive"
         >
           <Flag className="size-4" />
           Report job

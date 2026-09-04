@@ -131,7 +131,7 @@ function SignupPage() {
               type="button"
               onClick={() => setAccountType(option.value)}
               className={cn(
-                "flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors",
+                "flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold fluid",
                 accountType === option.value ? "bg-primary text-primary-foreground" : "hover:bg-secondary",
               )}
             >
@@ -156,7 +156,7 @@ function SignupPage() {
           <button
             type="button"
             onClick={() => setShowEmailForm(true)}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-input bg-background px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-input bg-background px-4 py-2.5 text-sm font-semibold fluid hover:bg-secondary"
           >
             <Mail className="size-4" />
             Continue with Email

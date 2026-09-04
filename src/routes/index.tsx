@@ -69,13 +69,13 @@ function Home() {
                 Early-stage prototype
               </span>
             </Reveal>
-            <Reveal delay={90}>
+            <Reveal delay={80}>
               <h1 className="mt-5 text-4xl font-semibold leading-[1.08] sm:text-5xl lg:text-[3.4rem]">
                 Your qualifications,
                 <span className="block text-teal-soft">matched to real opportunities</span>
               </h1>
             </Reveal>
-            <Reveal delay={170}>
+            <Reveal delay={160}>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-navy-foreground/80">
                 Tell Vryanta what you studied, what you can do and where you can work — once. Every opportunity is
                 then ranked for you, with a plain-English reason for the score.
@@ -104,7 +104,7 @@ function Home() {
                 </Magnetic>
                 <Link
                   to="/post-job"
-                  className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-foreground/75 transition-colors hover:text-navy-foreground"
+                  className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-foreground/75 fluid hover:text-navy-foreground"
                 >
                   <Building2 className="size-4" />
                   Post a Vacancy
@@ -132,7 +132,7 @@ function Home() {
             />
             <div className="absolute inset-0">
               {floatingCards.map((card, index) => (
-                <Reveal key={card.title} delay={200 + index * 130} variant="scale">
+                <Reveal key={card.title} delay={200 + index * 80} variant="scale">
                   <div
                     className="absolute w-[15rem] max-w-[78%]"
                     style={{
@@ -189,7 +189,7 @@ function Home() {
               body: "First-time job seekers get no signal on why a role fits them or what to improve in their profile.",
             },
           ].map((item, index) => (
-            <Reveal key={item.title} delay={index * 90}>
+            <Reveal key={item.title} delay={index * 80}>
               <InfoCard icon={item.icon} title={item.title}>
                 {item.body}
               </InfoCard>

@@ -214,7 +214,7 @@ export function SaveButton({ saving, children = "Save" }: { saving?: boolean; ch
     <button
       type="submit"
       disabled={saving}
-      className="inline-flex w-fit items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60"
+      className="inline-flex w-fit items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground fluid hover:opacity-90 disabled:opacity-60"
     >
       {saving ? <Loader2 className="size-4 animate-spin" /> : null}
       {saving ? "Saving…" : children}
@@ -250,7 +250,7 @@ export function EntryRow({
           onClick={onDelete}
           disabled={deleting}
           aria-label={`Delete ${title}`}
-          className="shrink-0 rounded-lg border border-input p-2 text-muted-foreground transition-colors hover:border-destructive hover:text-destructive disabled:opacity-50"
+          className="shrink-0 rounded-lg border border-input p-2 text-muted-foreground fluid hover:border-destructive hover:text-destructive disabled:opacity-50"
         >
           <Trash2 className="size-4" />
         </button>
