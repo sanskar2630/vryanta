@@ -270,19 +270,7 @@
   }
 }
 
-/* ---------------------------------------------------------------- *
- * Reusable premium surface primitives (opt-in classes)
- * ---------------------------------------------------------------- */
 
-@utility gradient-border {
-  position: relative;
-  isolation: isolate;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
 
 
 /* ---------------------------------------------------------------- *
