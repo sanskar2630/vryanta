@@ -93,7 +93,7 @@ export function MatchFlow({ className }: { className?: string }) {
               {flowProfile.skills.map((skill, index) => (
                 <span
                   key={skill}
-                  className="rounded-full border border-border bg-secondary/70 px-2.5 py-1 text-[11px] font-semibold text-secondary-foreground fluid"
+                  className="rounded-full border border-border bg-secondary/70 px-2.5 py-1 text-[11px] font-semibold text-secondary-foreground transition-all"
                   style={{
                     opacity: inView ? 1 : 0,
                     transform: inView ? "none" : "translateY(6px)",

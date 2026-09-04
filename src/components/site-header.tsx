@@ -18,7 +18,7 @@ export function SiteHeader() {
   const signedIn = Boolean(session);
 
   return (
-    <header className="fluid sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
       <div className="mx-auto grid h-16 w-full max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
         <Link to="/" className="flex min-w-0 items-center gap-2">
           <img src={logoAsset.url} alt="Vryanta logo" className="size-9 shrink-0 rounded-lg object-cover" />
@@ -31,7 +31,7 @@ export function SiteHeader() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="fluid rounded-md px-3 py-2 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                className="rounded-md px-3 py-2 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
                 activeProps={{ className: "text-foreground bg-secondary/70" }}
               >
                 {link.label}
@@ -45,7 +45,7 @@ export function SiteHeader() {
             ) : signedIn ? (
               <Link
                 to="/dashboard"
-                className="lift-press rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+                className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
                 Go to dashboard
               </Link>
@@ -53,13 +53,13 @@ export function SiteHeader() {
               <>
                 <Link
                   to="/auth/login"
-                  className="fluid rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   Login
                 </Link>
                 <Link
                   to="/auth/signup"
-                  className="lift-press rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+                  className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
                 >
                   Create Profile
                 </Link>
@@ -72,7 +72,7 @@ export function SiteHeader() {
             onClick={() => setOpen((value) => !value)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
-            className="lift-press inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
+            className="inline-flex size-10 items-center justify-center rounded-lg border border-border text-foreground md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -81,8 +81,8 @@ export function SiteHeader() {
 
       <div
         className={cn(
-          "grid overflow-hidden border-t border-border/70 transition-[grid-template-rows,opacity] duration-300 ease-out-expo md:hidden",
-          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] border-transparent opacity-0",
+          "grid overflow-hidden border-t border-border/70 transition-[grid-template-rows] duration-200 md:hidden",
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr] border-transparent",
         )}
       >
         <nav className="min-h-0">
@@ -92,7 +92,7 @@ export function SiteHeader() {
                 <Link
                   to={link.to}
                   onClick={() => setOpen(false)}
-                  className="fluid block rounded-lg px-3 py-2.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  className="block rounded-lg px-3 py-2.5 text-muted-foreground hover:bg-secondary hover:text-foreground"
                   activeProps={{ className: "text-foreground bg-secondary/70" }}
                 >
                   {link.label}
@@ -104,7 +104,7 @@ export function SiteHeader() {
                 <Link
                   to="/dashboard"
                   onClick={() => setOpen(false)}
-                  className="lift-press rounded-lg bg-primary px-4 py-2.5 text-center font-semibold text-primary-foreground"
+                  className="rounded-lg bg-primary px-4 py-2.5 text-center font-semibold text-primary-foreground"
                 >
                   Go to dashboard
                 </Link>
@@ -113,14 +113,14 @@ export function SiteHeader() {
                   <Link
                     to="/auth/login"
                     onClick={() => setOpen(false)}
-                    className="lift-press rounded-lg border border-input px-4 py-2.5 text-center font-semibold"
+                    className="rounded-lg border border-input px-4 py-2.5 text-center font-semibold"
                   >
                     Login
                   </Link>
                   <Link
                     to="/auth/signup"
                     onClick={() => setOpen(false)}
-                    className="lift-press rounded-lg bg-primary px-4 py-2.5 text-center font-semibold text-primary-foreground"
+                    className="rounded-lg bg-primary px-4 py-2.5 text-center font-semibold text-primary-foreground"
                   >
                     Create Profile
                   </Link>

@@ -29,7 +29,7 @@ export function GoogleButton({ label = "Continue with Google" }: { label?: strin
       type="button"
       onClick={onClick}
       disabled={pending}
-      className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-input bg-background px-4 py-2.5 text-sm font-semibold fluid hover:bg-secondary disabled:opacity-60"
+      className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-input bg-background px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary disabled:opacity-60"
     >
       <svg viewBox="0 0 24 24" className="size-4" aria-hidden>
         <path

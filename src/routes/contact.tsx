@@ -122,7 +122,7 @@ function ContactPage() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground fluid hover:opacity-90 sm:col-span-2 sm:w-fit"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:col-span-2 sm:w-fit"
             >
               <MessageSquare className="size-4" />
               Send message

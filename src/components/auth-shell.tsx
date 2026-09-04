@@ -38,7 +38,7 @@ export function FieldLabel({ children }: { children: ReactNode }) {
 }
 
 export const inputClass =
-  "w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm outline-none fluid placeholder:text-muted-foreground focus:border-accent";
+  "w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-accent";
 
 export const primaryButtonClass =
-  "inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground fluid hover:opacity-90 disabled:opacity-60";
+  "inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-60";

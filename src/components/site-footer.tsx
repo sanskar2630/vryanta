@@ -63,7 +63,7 @@ export function SiteFooter() {
                 <ul className="mt-3 grid gap-2 text-sm text-muted-foreground">
                   {column.links.map((link) => (
                     <li key={link.label}>
-                      <Link to={link.to} className="fluid hover:text-foreground">
+                      <Link to={link.to} className="transition-colors hover:text-foreground">
                         {link.label}
                       </Link>
                     </li>
@@ -82,7 +82,7 @@ export function SiteFooter() {
                 <Link
                   to="/jobs"
                   search={{ category: category.slug }}
-                  className="inline-flex rounded-full border border-border bg-background px-3 py-1 fluid hover:text-foreground"
+                  className="inline-flex rounded-full border border-border bg-background px-3 py-1 transition-colors hover:text-foreground"
                 >
                   {category.name}
                 </Link>

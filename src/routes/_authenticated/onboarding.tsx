@@ -188,7 +188,7 @@ function Onboarding() {
       </div>
 
       <div className="mt-4 h-2 overflow-hidden rounded-full bg-secondary">
-        <div className="h-full rounded-full bg-accent fluid duration-300" style={{ width: `${(step / TOTAL) * 100}%` }} />
+        <div className="h-full rounded-full bg-accent transition-all duration-300" style={{ width: `${(step / TOTAL) * 100}%` }} />
       </div>
 
       <div className="mt-6 space-y-4 rounded-xl border border-border bg-card p-5 sm:p-6">
@@ -309,7 +309,7 @@ function Onboarding() {
           type="button"
           onClick={() => setStep((s) => Math.max(1, s - 1))}
           disabled={step === 1}
-          className="inline-flex items-center gap-2 rounded-lg border border-input px-4 py-2.5 text-sm font-semibold fluid hover:bg-secondary disabled:opacity-40"
+          className="inline-flex items-center gap-2 rounded-lg border border-input px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary disabled:opacity-40"
         >
           <ArrowLeft className="size-4" /> Back
         </button>
@@ -317,7 +317,7 @@ function Onboarding() {
           <button
             type="button"
             onClick={() => setStep((s) => Math.min(TOTAL, s + 1))}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground fluid hover:scale-[1.02]"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02]"
           >
             Continue <ArrowRight className="size-4" />
           </button>
@@ -326,7 +326,7 @@ function Onboarding() {
             type="button"
             onClick={finish}
             disabled={saving}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground fluid hover:scale-[1.02] disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-60"
           >
             <Check className="size-4" /> {saving ? "Saving…" : "Finish setup"}
           </button>
@@ -362,7 +362,7 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-full border px-3.5 py-1.5 text-sm font-medium fluid hover:scale-[1.03]",
+        "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all hover:scale-[1.03]",
         active ? "border-primary bg-primary text-primary-foreground" : "border-border hover:bg-secondary",
       )}
     >

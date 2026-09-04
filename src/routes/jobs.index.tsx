@@ -64,7 +64,7 @@ function JobsPage() {
         <div className="mt-6 flex flex-wrap gap-2">
           <button
             onClick={() => navigate({ search: {} })}
-            className={`rounded-full border px-3.5 py-1.5 text-sm font-medium fluid ${
+            className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
               !category ? "border-primary bg-primary text-primary-foreground" : "border-border hover:bg-secondary"
             }`}
           >
@@ -74,7 +74,7 @@ function JobsPage() {
             <button
               key={item.slug}
               onClick={() => navigate({ search: { category: item.slug } })}
-              className={`rounded-full border px-3.5 py-1.5 text-sm font-medium fluid ${
+              className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors ${
                 category === item.slug
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border hover:bg-secondary"
