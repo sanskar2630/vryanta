@@ -184,16 +184,106 @@
 @utility card-lift {
   box-shadow: var(--shadow-card);
   transition:
-    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 220ms ease,
-    border-color 220ms ease;
+    transform var(--motion-slow) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    border-color var(--motion-slow) var(--motion-ease);
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: var(--shadow-lift);
     border-color: color-mix(in oklab, var(--primary) 45%, transparent);
   }
+
+  &:active {
+    transform: translate3d(0, -1px, 0);
+  }
 }
+
+/* Universal fluid hover: colors, borders, shadows, transforms. */
+@utility fluid {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter;
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--motion-ease);
+}
+
+/* Soft lift on hover, soft press on click — never a bounce. */
+@utility lift-press {
+  transition:
+    transform var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-slow) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease),
+    filter var(--motion-base) var(--motion-ease);
+  will-change: transform;
+
+  &:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: var(--shadow-lift);
+  }
+
+  &:active {
+    transform: translate3d(0, 1px, 0) scale(0.985);
+    box-shadow: none;
+  }
+}
+
+/* Image/media wrapper: gentle zoom-in as it enters view, parallax-friendly. */
+@utility media-fluid {
+  overflow: hidden;
+
+  & > img,
+  & > video {
+    transform: scale(1);
+    transition:
+      transform 900ms var(--motion-ease),
+      opacity var(--motion-reveal) var(--motion-ease);
+    will-change: transform;
+  }
+
+  &:hover > img,
+  &:hover > video {
+    transform: scale(1.03);
+  }
+
+  &[data-inview="false"] > img,
+  &[data-inview="false"] > video {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  &[data-inview="true"] > img,
+  &[data-inview="true"] > video {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media-fluid > img,
+  .media-fluid > video,
+  .lift-press,
+  .card-lift {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- *
+ * Reusable premium surface primitives (opt-in classes)
+ * ---------------------------------------------------------------- */
+
+@utility gradient-border {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+
 
 /* ---------------------------------------------------------------- *
  * Reusable premium surface primitives (opt-in classes)
