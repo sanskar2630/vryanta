@@ -104,7 +104,7 @@ function Home() {
                 </Magnetic>
                 <Link
                   to="/post-job"
-                  className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-foreground/75 transition-colors hover:text-navy-foreground"
+                  className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold text-navy-foreground/75 fluid hover:text-navy-foreground"
                 >
                   <Building2 className="size-4" />
                   Post a Vacancy

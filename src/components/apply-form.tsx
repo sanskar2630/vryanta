@@ -46,7 +46,7 @@ export function ApplyForm({ jobTitle, company }: { jobTitle: string; company: st
         </div>
         <button
           type="submit"
-          className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+          className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground fluid hover:opacity-90"
         >
           Submit application
         </button>
