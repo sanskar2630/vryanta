@@ -141,6 +141,40 @@
     border-color: var(--color-border);
   }
 
+  /* Global fluid baseline: nothing snaps between states. */
+  a,
+  button,
+  summary,
+  label,
+  input,
+  select,
+  textarea,
+  [role="button"],
+  [role="tab"],
+  [role="menuitem"] {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity,
+      box-shadow, transform, filter;
+    transition-duration: var(--motion-base);
+    transition-timing-function: var(--motion-ease);
+  }
+
+  img,
+  video {
+    transition:
+      transform 900ms var(--motion-ease),
+      opacity var(--motion-reveal) var(--motion-ease);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+
+
   html {
     color-scheme: dark;
   }
