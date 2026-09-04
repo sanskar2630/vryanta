@@ -10,7 +10,7 @@ export function JobCard({ job }: { job: Job }) {
     <Link
       to="/jobs/$jobId"
       params={{ jobId: job.id }}
-      className="card-lift flex h-full flex-col rounded-xl border border-border bg-card p-5"
+      className="card-lift fluid flex h-full flex-col rounded-xl border border-border bg-card p-5"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-secondary-foreground">
