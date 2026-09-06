@@ -134,13 +134,13 @@ function Home() {
               {floatingCards.map((card, index) => (
                 <Reveal key={card.title} delay={200 + index * 130} variant="scale" className="min-w-0">
                   <div
-                    className="relative w-full min-w-0 md:absolute md:w-[15rem] md:max-w-[78%]"
+                    className="relative left-0 top-0 w-full min-w-0 transform-none md:absolute md:left-[var(--card-x)] md:top-[var(--card-y)] md:w-[15rem] md:max-w-[78%] md:transform-[var(--card-transform)]"
                     style={{
-                      left: card.x,
-                      top: card.y,
-                      transform: `translate3d(calc(var(--depth-x, 0) * ${card.depth}px), calc(var(--depth-y, 0) * ${card.depth}px), 0)`,
+                      "--card-x": card.x,
+                      "--card-y": card.y,
+                      "--card-transform": `translate3d(calc(var(--depth-x, 0) * ${card.depth}px), calc(var(--depth-y, 0) * ${card.depth}px), 0)`,
                       transition: "transform 320ms cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
+                    } as React.CSSProperties}
                   >
                     <div className="float-slow" style={{ animationDelay: card.delay }}>
                       <div className="glass-panel flex min-h-11 w-full min-w-0 items-center gap-2.5 rounded-2xl p-3 shadow-xl shadow-black/25 md:gap-3 md:p-3.5">
