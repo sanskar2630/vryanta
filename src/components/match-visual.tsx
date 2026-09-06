@@ -71,11 +71,11 @@ export function MatchFlow({ className }: { className?: string }) {
     : 0;
 
   return (
-    <div ref={ref} className={cn("grid gap-4 lg:grid-cols-[0.9fr_auto_1.1fr] lg:items-center", className)}>
+    <div ref={ref} className={cn("grid min-w-0 gap-4 overflow-x-clip lg:grid-cols-[0.9fr_auto_1.1fr] lg:items-center lg:overflow-visible", className)}>
       {/* Stage 1 + 2: profile and skills */}
-      <div className="space-y-3">
-        <Reveal variant="right">
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <div className="min-w-0 space-y-3">
+        <Reveal variant="right" className="min-w-0">
+          <div className="w-full min-w-0 rounded-2xl border border-border bg-card p-3 shadow-[var(--shadow-card)] md:p-5">
             <div className="flex items-center gap-3">
               <span className="grid size-10 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
                 <UserRound className="size-5" />
@@ -132,14 +132,14 @@ export function MatchFlow({ className }: { className?: string }) {
       </Reveal>
 
       {/* Stage 4: ranked opportunities */}
-      <div className="space-y-3">
+      <div className="min-w-0 space-y-3">
         {ranked.map(({ job, match }, index) => (
-          <Reveal key={job.ref} delay={220 + index * 110} variant="left">
-            <div className="card-lift flex items-start gap-4 rounded-2xl border border-border bg-card p-4">
+          <Reveal key={job.ref} delay={220 + index * 110} variant="left" className="min-w-0">
+            <div className="card-lift flex w-full min-w-0 items-start gap-3 rounded-2xl border border-border bg-card p-3 md:gap-4 md:p-4">
               <ScoreRing value={match.score} size={62} />
               <div className="min-w-0 flex-1">
-                <p className="truncate font-display text-sm font-semibold">{job.title}</p>
-                <p className="truncate text-xs text-muted-foreground">
+                <p className="break-words font-display text-sm font-semibold leading-snug md:truncate">{job.title}</p>
+                <p className="mt-0.5 break-words text-xs leading-snug text-muted-foreground md:mt-0 md:truncate">
                   {job.company} · {job.location}
                 </p>
                 <p className="mt-2 line-clamp-2 flex items-start gap-1.5 text-xs text-muted-foreground">

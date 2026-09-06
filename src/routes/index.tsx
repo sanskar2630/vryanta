@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import type { CSSProperties } from "react";
 import {
   ArrowRight,
   Bell,
@@ -122,7 +123,7 @@ function Home() {
           </div>
 
           {/* Pointer-parallax stage with floating match cards */}
-          <div className="relative min-h-[24rem] sm:min-h-[28rem]">
+          <div className="relative md:min-h-[28rem]">
             <div
               className="glass-panel absolute inset-0 rounded-3xl"
               style={{
@@ -130,24 +131,24 @@ function Home() {
                   "translate3d(calc(var(--depth-x, 0) * 10px), calc(var(--depth-y, 0) * 10px), 0)",
               }}
             />
-            <div className="absolute inset-0">
+            <div className="relative grid grid-cols-1 gap-3 p-3 md:absolute md:inset-0 md:block md:p-0">
               {floatingCards.map((card, index) => (
-                <Reveal key={card.title} delay={200 + index * 130} variant="scale">
+                <Reveal key={card.title} delay={200 + index * 130} variant="scale" className="min-w-0">
                   <div
-                    className="absolute w-[15rem] max-w-[78%]"
+                    className="relative left-0 top-0 w-full min-w-0 transform-none md:absolute md:left-[var(--card-x)] md:top-[var(--card-y)] md:w-[15rem] md:max-w-[78%] md:transform-[var(--card-transform)]"
                     style={{
-                      left: card.x,
-                      top: card.y,
-                      transform: `translate3d(calc(var(--depth-x, 0) * ${card.depth}px), calc(var(--depth-y, 0) * ${card.depth}px), 0)`,
+                      "--card-x": card.x,
+                      "--card-y": card.y,
+                      "--card-transform": `translate3d(calc(var(--depth-x, 0) * ${card.depth}px), calc(var(--depth-y, 0) * ${card.depth}px), 0)`,
                       transition: "transform 320ms cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
+                    } as CSSProperties}
                   >
                     <div className="float-slow" style={{ animationDelay: card.delay }}>
-                      <div className="glass-panel flex items-center gap-3 rounded-2xl p-3.5 shadow-xl shadow-black/25">
+                      <div className="glass-panel flex min-h-11 w-full min-w-0 items-center gap-2.5 rounded-2xl p-3 shadow-xl shadow-black/25 md:gap-3 md:p-3.5">
                         <ScoreRing value={card.score} size={56} />
-                        <div className="min-w-0">
-                          <p className="truncate font-display text-sm font-semibold">{card.title}</p>
-                          <p className="truncate text-xs text-navy-foreground/70">{card.org}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="break-words font-display text-sm font-semibold leading-snug md:truncate">{card.title}</p>
+                          <p className="mt-0.5 break-words text-xs leading-snug text-navy-foreground/70 md:mt-0 md:truncate">{card.org}</p>
                         </div>
                       </div>
                     </div>
@@ -155,7 +156,7 @@ function Home() {
                 </Reveal>
               ))}
             </div>
-            <p className="absolute bottom-3 left-0 right-0 text-center text-[11px] text-navy-foreground/55">
+            <p className="relative px-3 pb-3 text-center text-[11px] text-navy-foreground/55 md:absolute md:bottom-3 md:left-0 md:right-0 md:p-0">
               Illustrative match cards — sample data
             </p>
           </div>
