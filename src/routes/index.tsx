@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import type { CSSProperties } from "react";
 import {
   ArrowRight,
   Bell,
@@ -140,7 +141,7 @@ function Home() {
                       "--card-y": card.y,
                       "--card-transform": `translate3d(calc(var(--depth-x, 0) * ${card.depth}px), calc(var(--depth-y, 0) * ${card.depth}px), 0)`,
                       transition: "transform 320ms cubic-bezier(0.22, 1, 0.36, 1)",
-                    } as React.CSSProperties}
+                    } as CSSProperties}
                   >
                     <div className="float-slow" style={{ animationDelay: card.delay }}>
                       <div className="glass-panel flex min-h-11 w-full min-w-0 items-center gap-2.5 rounded-2xl p-3 shadow-xl shadow-black/25 md:gap-3 md:p-3.5">
