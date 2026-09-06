@@ -67,7 +67,7 @@ function Home() {
             <Reveal>
               <span className="glass-panel inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide">
                 <Sparkles className="size-4" />
-                Early-stage prototype
+                Find your next opportunity
               </span>
             </Reveal>
             <Reveal delay={90}>

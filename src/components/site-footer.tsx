@@ -52,7 +52,7 @@ export function SiteFooter() {
               match their qualifications, skills and location.
             </p>
             <p className="mt-4 inline-flex rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-              Vryanta is currently an early-stage prototype.
+              Find opportunities matched to your qualifications.
             </p>
           </div>
 
