@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { JobCard } from "@/components/job-card";
 import { MatchFlow } from "@/components/match-visual";
+import BlackHole from "@/components/ui/black-hole";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { InfoCard, ScrollSteps, SectionHeading } from "@/components/marketing";
@@ -124,14 +125,15 @@ function Home() {
 
           {/* Pointer-parallax stage with floating match cards */}
           <div className="relative md:min-h-[28rem]">
+            <BlackHole className="rounded-3xl opacity-80" />
             <div
-              className="glass-panel absolute inset-0 rounded-3xl"
+              className="glass-panel absolute inset-0 z-[1] rounded-3xl"
               style={{
                 transform:
                   "translate3d(calc(var(--depth-x, 0) * 10px), calc(var(--depth-y, 0) * 10px), 0)",
               }}
             />
-            <div className="relative grid grid-cols-1 gap-3 p-3 md:absolute md:inset-0 md:block md:p-0">
+            <div className="relative z-[2] grid grid-cols-1 gap-3 p-3 md:absolute md:inset-0 md:block md:p-0">
               {floatingCards.map((card, index) => (
                 <Reveal key={card.title} delay={200 + index * 130} variant="scale" className="min-w-0">
                   <div
