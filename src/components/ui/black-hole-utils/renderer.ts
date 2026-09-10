@@ -39,7 +39,7 @@ export function createRenderer({ canvas }: RendererOptions) {
     speed: 0.09 + Math.random() * 0.2,
     size: 0.5 + Math.random() * 1.8,
     alpha: 0.24 + Math.random() * 0.7,
-    color: COLORS[index % COLORS.length] ?? COLORS[0],
+    color: COLORS[index % COLORS.length] ?? "#8be9fd",
   }));
 
   const resize = () => {
